@@ -176,7 +176,13 @@
         class="w-full mt-6 text-white bg-black hover:bg-main-color focus:ring-4 focus:ring-third-color font-semibold rounded-xl text-sm px-5 py-3 transition duration-300"
       >
         Create Account
+        @if (loading) {
+          <i class="fa fa-spinner animate-spin"></i>
+        }
       </button>
+      @if (errMsg) {
+        <p class="mt-1.5 text-xs text-red-500">{{ errMsg }}</p>
+      }
       <p class="text-center text-sm text-gray-500 mt-5">
         Already have an account?
         <a routerLink="/login" class="font-semibold cursor-pointer text-main-color"> Login </a>
