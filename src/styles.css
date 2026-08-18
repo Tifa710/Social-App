@@ -7,9 +7,9 @@ body {
   font-family: 'SN Pro', sans-serif;
 }
 @theme {
-  --color-main-color: #00d3f3;
+  --color-main-color: #9406ff;
   --color-second-color: #f0f2f5;
-  --color-third-color: #0092b8;
+  --color-third-color: ##bb6cff;
 }
 @utility container {
   margin-inline: auto;
