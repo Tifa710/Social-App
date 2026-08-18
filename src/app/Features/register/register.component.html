@@ -1,122 +1,186 @@
 <section
-  class="relative min-h-screen bg-[url('/images/register.jpg')] bg-cover bg-center flex items-center justify-center"
+  class="relative min-h-screen bg-[url('/images/register.jpg')] bg-cover bg-center flex items-center justify-center px-4 py-10"
 >
   <div class="absolute inset-0 bg-black/75"></div>
+
   <div class="container relative z-10">
-    <div class="w-full text-center">
-      <h2 class="text-white text-3xl p-5 font-bold">
+    <div class="text-center mb-6">
+      <h2 class="text-white text-4xl font-bold">
         Welcome To <span class="text-main-color">Nexora</span>
       </h2>
+
+      <p class="text-gray-300 mt-2 text-sm">Create your account and join the community</p>
     </div>
+
+    @let nameControl = registerForm.get('name');
+
     <form
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="max-w-sm mx-auto shadow-xl rounded-base p-4 bg-white"
+      class="w-full max-w-md mx-auto bg-white/80 backdrop-blur-md shadow-2xl rounded-2xl p-6 md:p-8"
     >
-      <div class="mb-1">
-        <label for="full-name" class="block mb-1.5 text-sm font-medium text-heading">
+      <div class="mb-4">
+        <label for="full-name" class="block mb-2 text-sm font-semibold text-gray-700">
           Full Name
         </label>
 
         <input
           type="text"
           id="full-name"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-          placeholder="Abdullatif Tarek "
-          required
-          formControlName="username"
+          formControlName="name"
+          placeholder="Abdullatif Tarek"
+          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
         />
-      </div>
-      <div class="mb-1">
-        <label for="userMame" class="block mb-1.5 text-sm font-medium text-heading">
-          User Name (Optional)
-        </label>
 
-        <input
-          type="text"
-          id="userMame"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-          placeholder="Tifa2002"
-          required
-          formControlName="username"
-        />
+        @if (nameControl?.touched) {
+          @if (nameControl?.hasError('required')) {
+            <p class="mt-1.5 text-xs text-red-500">Full name is required.</p>
+          } @else if (nameControl?.hasError('minlength')) {
+            <p class="mt-1.5 text-xs text-red-500">Name must be at least 3 characters.</p>
+          }
+        }
       </div>
-      <div class="mb-1">
-        <label for="email" class="block mb-1.5 text-sm font-medium text-heading">
-          Your email
-        </label>
 
-        <input
-          type="email"
-          id="email"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-          placeholder="tefa.tarek16@gmail.com"
-          required
-          formControlName="email"
-        />
-      </div>
-      <div class="mb-1">
-        <label for="gender" class="block mb-1.5 text-sm font-medium text-heading"> Gender </label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="username" class="block mb-2 text-sm font-semibold text-gray-700">
+            Username
+            <span class="text-gray-400 font-normal">(Optional)</span>
+          </label>
 
-        <select
-          id="gender"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs"
-          required
-          formArrayName="gender"
-        >
-          <option value="" selected disabled>Select your gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
-      <div class="mb-1">
-        <label for="dob" class="block mb-1.5 text-sm font-medium text-heading">
-          Date of Birth
-        </label>
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            placeholder="Tifa2002"
+            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
+          />
+        </div>
 
-        <input
-          type="date"
-          id="dob"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs"
-          required
-          formControlName="dateOfBirth"
-        />
+        <div>
+          <label for="email" class="block mb-2 text-sm font-semibold text-gray-700"> Email </label>
+
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="name@gmail.com"
+            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
+          />
+
+          @if (
+            registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')
+          ) {
+            <p class="mt-1.5 text-xs text-red-500">Email is required.</p>
+          } @else if (
+            registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')
+          ) {
+            <p class="mt-1.5 text-xs text-red-500">Please enter a valid email.</p>
+          }
+        </div>
       </div>
-      <div class="mb-1">
-        <label for="password" class="block mb-1.5 text-sm font-medium text-heading">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label for="gender" class="block mb-2 text-sm font-semibold text-gray-700">
+            Gender
+          </label>
+
+          <select
+            id="gender"
+            formControlName="gender"
+            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition bg-white"
+          >
+            <option value="" disabled>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
+          @if (
+            registerForm.get('gender')?.touched && registerForm.get('gender')?.hasError('required')
+          ) {
+            <p class="mt-1.5 text-xs text-red-500">Please select your gender.</p>
+          }
+        </div>
+        <div>
+          <label for="dob" class="block mb-2 text-sm font-semibold text-gray-700">
+            Date of Birth
+          </label>
+
+          <input
+            type="date"
+            id="dob"
+            formControlName="dateOfBirth"
+            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
+          />
+
+          @if (
+            registerForm.get('dateOfBirth')?.touched &&
+            registerForm.get('dateOfBirth')?.hasError('required')
+          ) {
+            <p class="mt-1.5 text-xs text-red-500">Date of birth is required.</p>
+          }
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label for="password" class="block mb-2 text-sm font-semibold text-gray-700">
           Password
         </label>
 
         <input
           type="password"
           id="password"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-          placeholder="••••••••"
-          required
           formControlName="password"
+          placeholder="••••••••"
+          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
         />
+
+        @if (registerForm.get('password')?.touched) {
+          @if (registerForm.get('password')?.hasError('required')) {
+            <p class="mt-1.5 text-xs text-red-500">Password is required.</p>
+          } @else if (registerForm.get('password')?.hasError('pattern')) {
+            <p class="mt-1.5 text-xs text-red-500 leading-5">
+              Password must contain 8+ characters, uppercase, lowercase, number and special
+              character.
+            </p>
+          }
+        }
       </div>
-      <div class="mb-1">
-        <label for="password" class="block mb-1.5 text-sm font-medium text-heading">
+      <div class="mt-4">
+        <label for="rePassword" class="block mb-2 text-sm font-semibold text-gray-700">
           Confirm Password
         </label>
 
         <input
           type="password"
-          id="password"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-          placeholder="••••••••"
-          required
+          id="rePassword"
           formControlName="rePassword"
+          placeholder="••••••••"
+          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
         />
-      </div>
 
+        @if (
+          registerForm.get('rePassword')?.touched &&
+          registerForm.get('rePassword')?.hasError('required')
+        ) {
+          <p class="mt-1.5 text-xs text-red-500">Please confirm your password.</p>
+        }
+
+        @if (registerForm.get('rePassword')?.touched && registerForm.hasError('passwordMismatch')) {
+          <p class="mt-1.5 text-xs text-red-500">Passwords do not match.</p>
+        }
+      </div>
       <button
         type="submit"
-        class="w-full text-white bg-black box-border border border-transparent hover:bg-main-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-sm mt-2 px-4 py-2.5 focus:outline-none"
+        class="w-full mt-6 text-white bg-black hover:bg-main-color focus:ring-4 focus:ring-third-color font-semibold rounded-xl text-sm px-5 py-3 transition duration-300"
       >
-        Submit
+        Create Account
       </button>
+      <p class="text-center text-sm text-gray-500 mt-5">
+        Already have an account?
+        <a routerLink="/login" class="font-semibold cursor-pointer text-main-color"> Login </a>
+      </p>
     </form>
   </div>
 </section>
