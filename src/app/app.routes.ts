@@ -9,6 +9,8 @@ import { ProfileComponent } from './Features/profile/profile.component';
 import { NotificationComponent } from './Features/notification/notification.component';
 import { ChangePasswordComponent } from './Features/change-password/change-password.component';
 import { NotfoundComponent } from './Features/notfound/notfound.component';
+import { authGuard } from './Core/Auth/Guards/auth-guard';
+import { guestGuard } from './Core/Auth/Guards/guest-guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +21,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [guestGuard],
     children: [
       {
         path: 'login',
@@ -37,6 +40,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'feed',

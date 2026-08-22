@@ -25,7 +25,7 @@
         <div
           class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-main-color/10 flex items-center justify-center"
         >
-          <i class="fa-solid fa-right-to-bracket text-main-color text-2xl"></i>
+          <img src="/images/logo.png" alt="" />
         </div>
 
         <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Welcome Back</h2>
@@ -90,6 +90,11 @@
               <i class="fa-solid fa-circle-exclamation"></i>
               Password is required.
             </p>
+          } @else if (passwordControl?.hasError('pattern')) {
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Please Enter Password In Right Format.
+            </p>
           }
         }
       </div>
@@ -107,7 +112,6 @@
       }
       <button
         type="submit"
-        [disabled]="loading"
         class="w-full flex items-center justify-center gap-2 text-white bg-black hover:bg-main-color disabled:opacity-60 disabled:cursor-not-allowed focus:ring-4 focus:ring-main-color/20 font-semibold rounded-xl text-sm px-5 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
       >
         @if (loading) {

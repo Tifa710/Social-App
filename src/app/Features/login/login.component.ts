@@ -49,6 +49,8 @@ export class LoginComponent {
       this.loginSub$ = this.authService.signIn(this.loginForm.value).subscribe({
         next: (res) => {
           if (res.success) {
+            localStorage.setItem('socialToken', res.data.token);
+            localStorage.setItem('userData', JSON.stringify(res.data.user));
             setTimeout(() => {
               this.router.navigate(['/feed']);
             }, 1000);
@@ -56,6 +58,8 @@ export class LoginComponent {
         },
         error: (err: HttpErrorResponse) => {
           this.errMsg = err.error.message;
+          console.log(err);
+
           this.loading = false;
         },
         complete: () => {
