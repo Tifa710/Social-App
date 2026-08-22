@@ -14,7 +14,10 @@ export class AuthService {
       data,
     );
   }
-  signIn(data: object): Observable<any> {
-    return this.httpClient.post('https://route-posts.routemisr.com/users/signin', data);
+  signIn(data: object): Observable<UserDataResponse> {
+    return this.httpClient.post<UserDataResponse>(
+      'https://route-posts.routemisr.com/users/signin',
+      data,
+    );
   }
 }

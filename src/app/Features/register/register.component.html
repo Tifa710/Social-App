@@ -1,105 +1,145 @@
 <section
-  class="relative min-h-screen bg-[url('/images/register.jpg')] bg-cover bg-center flex items-center justify-center px-4 py-10"
+  class="relative min-h-screen overflow-hidden flex items-center justify-center bg-slate-950 px-4 py-10"
 >
-  <div class="absolute inset-0 bg-black/75"></div>
+  <div
+    class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-cyan-500/20 blur-[120px]"
+  ></div>
 
-  <div class="container relative z-10">
-    <div class="text-center mb-6">
-      <h2 class="text-white text-4xl font-bold">
-        Welcome To <span class="text-main-color">Nexora</span>
-      </h2>
+  <div
+    class="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-main-color/20 blur-[120px]"
+  ></div>
+  <div
+    class="absolute inset-0 opacity-[0.04] bg-[linear-gradient(#fff_1px,transparent_1px), linear-gradient(90deg,#fff_1px,transparent_1px)] bg-[size:40px_40px]"
+  ></div>
 
-      <p class="text-gray-300 mt-2 text-sm">Create your account and join the community</p>
-    </div>
-
+  <div class="relative z-10 w-full">
     @let nameControl = registerForm.get('name');
-
     <form
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="w-full max-w-md mx-auto bg-white/80 backdrop-blur-md shadow-2xl rounded-2xl p-6 md:p-8"
+      class="w-full max-w-xl mx-auto bg-white/95 backdrop-blur-xl border border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.18)] rounded-3xl p-6 sm:p-8 md:p-10"
     >
-      <div class="mb-4">
+      <div class="text-center mb-7 animate-fade-in">
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+          Welcome To <span class="text-main-color">Nexora</span>
+        </h2>
+        <p class="text-gray-900 mt-2 text-sm md:text-base">
+          Create your account and join the community
+        </p>
+      </div>
+      <div class="mb-5">
         <label for="full-name" class="block mb-2 text-sm font-semibold text-gray-700">
           Full Name
         </label>
 
-        <input
-          type="text"
-          id="full-name"
-          formControlName="name"
-          placeholder="Abdullatif Tarek"
-          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-        />
+        <div class="relative">
+          <i
+            class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-main-color"
+          ></i>
 
+          <input
+            type="text"
+            id="full-name"
+            formControlName="name"
+            placeholder="Abdullatif Tarek"
+            class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+          />
+        </div>
         @if (nameControl?.touched) {
           @if (nameControl?.hasError('required')) {
-            <p class="mt-1.5 text-xs text-red-500">Full name is required.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Full name is required.
+            </p>
           } @else if (nameControl?.hasError('minlength')) {
-            <p class="mt-1.5 text-xs text-red-500">Name must be at least 3 characters.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Name must be at least 3 characters.
+            </p>
           }
         }
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label for="username" class="block mb-2 text-sm font-semibold text-gray-700">
             Username
             <span class="text-gray-400 font-normal">(Optional)</span>
           </label>
 
-          <input
-            type="text"
-            id="username"
-            formControlName="username"
-            placeholder="Tifa2002"
-            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-          />
+          <div class="relative">
+            <i class="fa-solid fa-at absolute left-4 top-1/2 -translate-y-1/2 text-main-color"></i>
+
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              placeholder="Tifa2002"
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+            />
+          </div>
         </div>
 
         <div>
           <label for="email" class="block mb-2 text-sm font-semibold text-gray-700"> Email </label>
 
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            placeholder="name@gmail.com"
-            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-          />
+          <div class="relative">
+            <i
+              class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-main-color"
+            ></i>
 
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="name@gmail.com"
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+            />
+          </div>
           @if (
             registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')
           ) {
-            <p class="mt-1.5 text-xs text-red-500">Email is required.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Email is required.
+            </p>
           } @else if (
             registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')
           ) {
-            <p class="mt-1.5 text-xs text-red-500">Please enter a valid email.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Please enter a valid email.
+            </p>
           }
         </div>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
         <div>
           <label for="gender" class="block mb-2 text-sm font-semibold text-gray-700">
             Gender
           </label>
 
-          <select
-            id="gender"
-            formControlName="gender"
-            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition bg-white"
-          >
-            <option value="" disabled>Select gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          <div class="relative">
+            <i
+              class="fa-solid fa-venus-mars absolute left-4 top-1/2 -translate-y-1/2 text-main-color pointer-events-none"
+            ></i>
 
+            <select
+              id="gender"
+              formControlName="gender"
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+            >
+              <option value="" disabled>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
           @if (
             registerForm.get('gender')?.touched && registerForm.get('gender')?.hasError('required')
           ) {
-            <p class="mt-1.5 text-xs text-red-500">Please select your gender.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Please select your gender.
+            </p>
           }
         </div>
         <div>
@@ -107,85 +147,128 @@
             Date of Birth
           </label>
 
-          <input
-            type="date"
-            id="dob"
-            formControlName="dateOfBirth"
-            class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-          />
+          <div class="relative">
+            <i
+              class="fa-regular fa-calendar absolute left-4 top-1/2 -translate-y-1/2 text-main-color pointer-events-none"
+            ></i>
 
+            <input
+              type="date"
+              id="dob"
+              formControlName="dateOfBirth"
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+            />
+          </div>
           @if (
             registerForm.get('dateOfBirth')?.touched &&
             registerForm.get('dateOfBirth')?.hasError('required')
           ) {
-            <p class="mt-1.5 text-xs text-red-500">Date of birth is required.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Date of birth is required.
+            </p>
           }
         </div>
       </div>
-
-      <div class="mt-4">
+      <div class="mt-5">
         <label for="password" class="block mb-2 text-sm font-semibold text-gray-700">
           Password
         </label>
 
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          placeholder="••••••••"
-          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-        />
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-main-color"></i>
 
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+          />
+        </div>
         @if (registerForm.get('password')?.touched) {
           @if (registerForm.get('password')?.hasError('required')) {
-            <p class="mt-1.5 text-xs text-red-500">Password is required.</p>
+            <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Password is required.
+            </p>
           } @else if (registerForm.get('password')?.hasError('pattern')) {
-            <p class="mt-1.5 text-xs text-red-500 leading-5">
+            <p class="mt-2 text-xs text-red-500 leading-5">
               Password must contain 8+ characters, uppercase, lowercase, number and special
               character.
             </p>
           }
         }
       </div>
-      <div class="mt-4">
+      <div class="mt-5">
         <label for="rePassword" class="block mb-2 text-sm font-semibold text-gray-700">
           Confirm Password
         </label>
 
-        <input
-          type="password"
-          id="rePassword"
-          formControlName="rePassword"
-          placeholder="••••••••"
-          class="border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-main-color focus:border-main-color block w-full px-4 py-3 outline-none transition"
-        />
+        <div class="relative">
+          <i
+            class="fa-solid fa-shield-halved absolute left-4 top-1/2 -translate-y-1/2 text-main-color"
+          ></i>
+
+          <input
+            type="password"
+            id="rePassword"
+            formControlName="rePassword"
+            placeholder="Confirm your password"
+            class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-all duration-200 focus:bg-white focus:border-main-color focus:ring-4 focus:ring-main-color/10"
+          />
+        </div>
 
         @if (
           registerForm.get('rePassword')?.touched &&
           registerForm.get('rePassword')?.hasError('required')
         ) {
-          <p class="mt-1.5 text-xs text-red-500">Please confirm your password.</p>
+          <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            Please confirm your password.
+          </p>
         }
 
-        @if (registerForm.get('rePassword')?.touched && registerForm.hasError('passwordMismatch')) {
-          <p class="mt-1.5 text-xs text-red-500">Passwords do not match.</p>
+        @if (registerForm.get('rePassword')?.touched && registerForm.hasError('missMatch')) {
+          <p class="mt-2 text-xs text-red-500 flex items-center gap-1">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            Passwords do not match.
+          </p>
         }
       </div>
+      @if (errMsg) {
+        <div
+          class="mt-5 flex items-center gap-2 rounded-xl bg-red-50 border border-red-100 px-4 py-3"
+        >
+          <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+
+          <p class="text-xs text-red-600">
+            {{ errMsg }}
+          </p>
+        </div>
+      }
+
       <button
         type="submit"
-        class="w-full mt-6 text-white bg-black hover:bg-main-color focus:ring-4 focus:ring-third-color font-semibold rounded-xl text-sm px-5 py-3 transition duration-300"
+        [disabled]="loading"
+        class="w-full mt-6 flex items-center justify-center gap-2 text-white bg-black hover:bg-main-color disabled:opacity-60 disabled:cursor-not-allowed focus:ring-4 focus:ring-main-color/20 font-semibold rounded-xl text-sm px-5 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
       >
-        Create Account
         @if (loading) {
-          <i class="fa fa-spinner animate-spin"></i>
+          <i class="fa-solid fa-spinner animate-spin"></i>
+          <span>Creating Account...</span>
+        } @else {
+          <span>Create Account</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
         }
       </button>
-      @if (errMsg) {
-        <p class="mt-1.5 text-xs text-red-500">{{ errMsg }}</p>
-      }
-      <p class="text-center text-sm text-gray-500 mt-5">
+      <p class="text-center text-sm text-gray-500 mt-6">
         Already have an account?
-        <a routerLink="/login" class="font-semibold cursor-pointer text-main-color"> Login </a>
+        <a
+          routerLink="/login"
+          class="font-semibold text-main-color hover:text-third-color transition-colors cursor-pointer ml-1"
+        >
+          Login
+        </a>
       </p>
     </form>
   </div>
