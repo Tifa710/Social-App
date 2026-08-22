@@ -1,0 +1,115 @@
+<nav
+  class="fixed top-0 left-0 right-0 z-50 h-20 bg-white border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+>
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 lg:px-6">
+    <a routerLink="/feed" class="flex items-center gap-3">
+      <img src="images/logo.png" alt="Nexora" class="h-11 w-11 rounded-xl object-cover" />
+
+      <div class="hidden sm:block">
+        <h1 class="text-xl font-extrabold tracking-tight text-main-color">Nexora</h1>
+      </div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-1 rounded-xl bg-gray-100 p-1.5">
+      <a
+        routerLink="/feed"
+        routerLinkActive="bg-white text-main-color shadow-sm"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+      >
+        <i class="fa-solid fa-house"></i>
+
+        <span> Community </span>
+      </a>
+
+      <a
+        routerLink="/profile"
+        routerLinkActive="bg-white text-main-color shadow-sm"
+        class="flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+      >
+        <i class="fa-solid fa-user"></i>
+
+        <span> Profile </span>
+      </a>
+
+      <a
+        routerLink="/notification"
+        routerLinkActive="bg-white text-main-color shadow-sm"
+        class="relative flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+      >
+        <i class="fa-solid fa-bell"></i>
+
+        <span> Notifications </span>
+
+        <span
+          class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-main-color px-1 text-[9px] font-bold text-white"
+        >
+          3
+        </span>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <button
+          type="button"
+          (click)="toggleUserMenu()"
+          class="flex items-center gap-3 rounded-xl p-1.5 pr-2 transition-all duration-200 hover:bg-gray-50"
+        >
+          <img
+            src="images/user.jpg"
+            alt="User profile"
+            class="h-10 w-10 rounded-full object-cover ring-2 ring-main-color/20"
+          />
+          <div class="hidden sm:block text-left">
+            <p class="text-sm font-bold text-gray-800">Abdullatif</p>
+
+            <p class="text-[11px] font-medium text-gray-400">User</p>
+          </div>
+          <i
+            class="fa-solid fa-chevron-down hidden sm:block text-[10px] text-gray-400 transition-transform duration-200"
+            [class.rotate-180]="isUserMenuOpen"
+          ></i>
+        </button>
+        @if (isUserMenuOpen) {
+          <div
+            class="absolute right-0 top-[calc(100%+12px)] w-60 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl shadow-black/10"
+          >
+            <div class="border-b border-gray-100 bg-gray-50 px-4 py-4">
+              <p class="text-sm font-bold text-gray-900">Abdullatif</p>
+
+              <p class="mt-1 text-xs text-gray-400">abdullatif@example.com</p>
+            </div>
+            <div class="p-2">
+              <a
+                routerLink="/changePassword"
+                (click)="isUserMenuOpen = false"
+                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-main-color"
+              >
+                <span
+                  class="flex h-9 w-9 items-center justify-center rounded-lg bg-main-color/10 text-main-color"
+                >
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+
+                <span> Change Password </span>
+              </a>
+              <button
+                (click)="sigOut()"
+                type="button"
+                class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 cursor-pointer"
+              >
+                <span
+                  class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-500/10 text-red-500"
+                >
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                </span>
+                <span> Sign Out </span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
