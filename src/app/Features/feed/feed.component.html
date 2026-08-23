@@ -1,1 +1,15 @@
-<p>feed works!</p>
+<div class="min-h-screen bg-second-color pt-10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <!-- ================= LEFT SIDEBAR ================= -->
+      <app-sidebar-navigation class="lg:col-span-3" />
+
+      <!-- CENTER FEED -->
+      <app-feedcontent class="lg:col-span-6" />
+
+      <!-- RIGHT SIDEBAR -->
+      <app-suggested-friends class="lg:col-span-3" />
+    </div>
+  </div>
+</div>

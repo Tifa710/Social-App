@@ -9,7 +9,8 @@ body {
 @theme {
   --color-main-color: #9406ff;
   --color-second-color: #f0f2f5;
-  --color-third-color: ##bb6cff;
+  --color-third-color: #bb6cff;
+  --color-button-color: black;
 }
 @utility container {
   margin-inline: auto;
