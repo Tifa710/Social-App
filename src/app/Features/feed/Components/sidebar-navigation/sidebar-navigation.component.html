@@ -21,8 +21,10 @@
     <nav class="p-3">
       <!-- Feed -->
       <a
-        href="#"
-        class="mb-1 flex items-center gap-3 rounded-xl bg-main-color/10 px-4 py-3 font-semibold text-main-color"
+        routerLink="feedPost"
+        routerLinkActive="bg-main-color/10 text-main-color"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
       >
         <i class="fa-solid fa-house w-5 text-center"></i>
         <span>Feed</span>
@@ -30,8 +32,10 @@
 
       <!-- My Posts -->
       <a
-        href="#"
-        class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
+        routerLink="myPost"
+        routerLinkActive="bg-main-color/10 text-main-color"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
       >
         <i class="fa-solid fa-user w-5 text-center"></i>
         <span>My Posts</span>
@@ -39,8 +43,10 @@
 
       <!-- Community -->
       <a
-        href="#"
-        class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
+        routerLink="community"
+        routerLinkActive="bg-main-color/10 text-main-color"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
       >
         <i class="fa-solid fa-users w-5 text-center"></i>
         <span>Community</span>
@@ -48,8 +54,10 @@
 
       <!-- Saved Posts -->
       <a
-        href="#"
-        class="flex items-center gap-3 rounded-xl px-4 py-3 text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
+        routerLink="savedPost"
+        routerLinkActive="bg-main-color/10 text-main-color"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-600 transition hover:bg-main-color/10 hover:text-main-color"
       >
         <i class="fa-solid fa-bookmark w-5 text-center"></i>
         <span>Saved Posts</span>

@@ -1,0 +1,147 @@
+<form #form
+  (submit)="submitPost($event , form)"
+  class="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
+>
+  <!-- ================= HEADER ================= -->
+  <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+    <!-- User -->
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <img
+          [src]="userData.photo"
+          alt="Profile"
+          class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/20"
+        />
+
+        <!-- Online -->
+        <span
+          class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500"
+        ></span>
+      </div>
+
+      <div class="leading-tight">
+        <h3 class="text-sm font-bold text-gray-900">
+          {{ userData.name }}
+        </h3>
+
+        <p class="mt-1 text-xs text-gray-500">
+          {{ userData.email }}
+        </p>
+      </div>
+    </div>
+
+    <!-- ================= PRIVACY ================= -->
+    <div class="relative">
+      <label for="privacy" class="sr-only"> Post privacy </label>
+
+      <select
+        [formControl]="privacyControl"
+        id="privacy"
+        name="privacy"
+        class="cursor-pointer appearance-none rounded-lg border border-gray-200 bg-second-color py-2 pl-3 pr-8 text-xs font-semibold text-gray-600 outline-none transition hover:border-main-color/30 hover:text-main-color focus:border-main-color focus:ring-2 focus:ring-main-color/10"
+      >
+        <option value="public">🌍 Public</option>
+        <option value="following">👥 Friends</option>
+        <option value="only_me">🔒 Only me</option>
+      </select>
+
+      <i
+        class="fa-solid fa-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[9px] text-gray-400"
+      ></i>
+    </div>
+  </div>
+
+  <!-- ================= FORM CONTENT ================= -->
+  <div class="p-5">
+    <!-- ================= TEXTAREA ================= -->
+    <div>
+      <textarea
+        [formControl]="contentControl"
+        id="postContent"
+        name="content"
+        rows="5"
+        placeholder="What's on your mind, Abdullatif?"
+        class="w-full resize-none rounded-2xl border border-gray-200 bg-second-color p-4 text-sm leading-6 text-gray-700 outline-none transition-all duration-200 placeholder:text-gray-400 focus:border-main-color/30 focus:bg-white focus:ring-4 focus:ring-main-color/5"
+      ></textarea>
+    </div>
+
+    <!-- ================= IMAGE PREVIEW ================= -->
+    @if (imgUrl) {
+      <div
+        class="relative mt-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 shadow-sm"
+      >
+        <!-- Image -->
+        <img
+          [src]="imgUrl"
+          alt="Create Post Photo"
+          class="h-72 w-full object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+
+        <!-- Remove Image -->
+        <button
+          type="button"
+          (click)="removeFile()"
+          aria-label="Remove image"
+          class="absolute right-3 top-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-red-500 active:scale-95"
+        >
+          <i class="fas fa-xmark text-sm"></i>
+        </button>
+
+        <!-- Bottom Gradient -->
+        <div
+          class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/20 to-transparent"
+        ></div>
+      </div>
+    }
+
+    <!-- ================= MEDIA UPLOAD ================= -->
+    <div class="mt-4">
+      <label
+        for="postMedia"
+        class="group flex cursor-pointer items-center gap-4 rounded-xl border border-dashed border-gray-200 bg-gray-50 px-4 py-3 transition-all duration-200 hover:border-main-color/40 hover:bg-main-color/5"
+      >
+        <!-- Icon -->
+        <div
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-main-color/10 text-main-color transition group-hover:bg-main-color group-hover:text-white"
+        >
+          <i class="fa-solid fa-image"></i>
+        </div>
+
+        <!-- Text -->
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-gray-700">Add photos or videos</p>
+
+          <p class="mt-0.5 text-xs text-gray-400">Share something visual with your friends</p>
+        </div>
+
+        <!-- Plus -->
+        <i
+          class="fa-solid fa-plus text-sm text-gray-400 transition group-hover:text-main-color"
+        ></i>
+      </label>
+
+      <input
+        (change)="changeFile($event)"
+        id="postMedia"
+        type="file"
+        accept="image/*,video/*"
+        class="hidden"
+      />
+    </div>
+
+    <!-- ================= ACTIONS ================= -->
+    <div
+      class="mt-5 flex flex-col gap-3 border-t border-gray-100 pt-4 sm:flex-row sm:items-center sm:justify-end"
+    >
+      <!-- Share -->
+      <button
+        type="submit"
+        class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-button-color px-7 py-3 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-main-color hover:shadow-lg hover:shadow-main-color/20 active:scale-[0.97]"
+      >
+        <span>Share Post</span>
+
+        <i class="fa-solid fa-paper-plane text-xs"></i>
+      </button>
+    </div>
+  </div>
+</form>
