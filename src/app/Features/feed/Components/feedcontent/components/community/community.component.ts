@@ -4,6 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Post } from '../../../../../../Core/Models/post-data.interface';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { CommentsService } from '../../../../../../Core/Services/comments.service';
+import { Comment } from '../../../../../../Core/Models/comments.interface';
 
 @Component({
   selector: 'app-community',
@@ -13,8 +15,10 @@ import { Subscription } from 'rxjs';
 })
 export class CommunityComponent implements OnInit, OnDestroy {
   private readonly postService = inject(PostService);
+  private readonly commentsService = inject(CommentsService);
   private postSubscription!: Subscription;
   postArray: Post[] = [];
+  commentsArray: Comment[] = [];
   userId: string = '';
   ngOnInit(): void {
     this.getAllPosts();
@@ -48,6 +52,17 @@ export class CommunityComponent implements OnInit, OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
+  }
+  getPostCommentsData(postId: string): void {
+    this.commentsService.getPostComment(postId).subscribe({
+      next: (res) => {
+        this.commentsArray = res.data.comments;
+        console.log(res);
+      },
+      error: (err) => {
         console.log(err);
       },
     });

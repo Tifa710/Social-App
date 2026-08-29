@@ -1,1 +1,144 @@
-<p>notfound works!</p>
+<div class="relative min-h-screen overflow-hidden bg-second-color px-4 py-8 sm:px-6 lg:px-8">
+  <!-- ================= BACKGROUND DECORATIONS ================= -->
+
+  <div
+    class="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-main-color/20 blur-3xl"
+  ></div>
+
+  <div
+    class="pointer-events-none absolute -bottom-40 -right-40 h-125 w-125 rounded-full bg-third-color/20 blur-3xl"
+  ></div>
+
+  <div
+    class="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-main-color/10 blur-3xl"
+  ></div>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="relative z-10 mx-auto flex max-w-7xl items-center">
+    <button type="button" (click)="goHome()" class="group flex items-center gap-3">
+      <!-- Logo -->
+      <div
+        class="flex h-11 w-11 items-center justify-center rounded-xl bg-second-color shadow-lg shadow-main-color/30 transition duration-300 group-hover:scale-105 group-hover:shadow-xl"
+      >
+        <img src="images/logo.png" alt="Nexora Logo" class="h-7 w-7 object-contain" />
+      </div>
+
+      <!-- Brand -->
+      <span
+        class="text-2xl font-black tracking-tight text-main-color transition group-hover:text-main-color"
+      >
+        Nexora
+      </span>
+    </button>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="relative z-10 flex min-h-[calc(100vh-100px)] items-center justify-center">
+    <div class="w-full max-w-3xl text-center">
+      <!-- ================= 404 NUMBER ================= -->
+
+      <div class="relative mx-auto mb-8 w-fit">
+        <!-- Glow -->
+        <div class="absolute inset-0 scale-75 rounded-full bg-main-color/20 blur-3xl"></div>
+
+        <!-- 404 -->
+        <h1
+          class="relative select-none text-[120px] font-black leading-none tracking-[-0.08em] text-main-color drop-shadow-[0_15px_35px_rgba(148,6,255,0.20)] sm:text-[180px] md:text-[220px]"
+        >
+          404
+        </h1>
+
+        <!-- Floating Badge -->
+        <div
+          class="absolute -right-2 top-4 flex h-14 w-14 rotate-12 items-center justify-center rounded-2xl border border-white/80 bg-white/80 shadow-xl backdrop-blur-xl sm:-right-8 sm:top-8"
+        >
+          <span class="text-2xl">🚀</span>
+        </div>
+
+        <!-- Floating Dot -->
+        <div
+          class="absolute -left-4 bottom-5 h-5 w-5 animate-pulse rounded-full bg-third-color sm:-left-10"
+        ></div>
+
+        <!-- Floating Star -->
+        <div class="absolute -right-6 bottom-8 text-3xl text-main-color sm:-right-14">✦</div>
+      </div>
+
+      <!-- ================= CONTENT CARD ================= -->
+
+      <div
+        class="mx-auto max-w-2xl rounded-4xl border border-white/70 bg-white/75 p-7 shadow-[0_25px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:p-10"
+      >
+        <!-- Small label -->
+
+        <div
+          class="mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border border-main-color/10 bg-main-color/10 px-4 py-2"
+        >
+          <span class="h-2 w-2 animate-pulse rounded-full bg-main-color"></span>
+
+          <span class="text-sm font-semibold text-main-color"> Page not found </span>
+        </div>
+
+        <!-- Heading -->
+
+        <h2 class="mb-4 text-3xl font-black tracking-tight text-gray-900 sm:text-4xl">
+          Looks like you took a
+          <span class="text-main-color">wrong turn.</span>
+        </h2>
+
+        <!-- Description -->
+
+        <p class="mx-auto mb-8 max-w-lg text-base leading-7 text-gray-500 sm:text-lg">
+          The page you're looking for doesn't exist or may have been moved. Don't worry, let's get
+          you back to somewhere useful.
+        </p>
+
+        <!-- ================= ACTIONS ================= -->
+
+        <div class="flex flex-col justify-center gap-3 sm:flex-row">
+          <!-- Home -->
+
+          <button
+            type="button"
+            (click)="goHome()"
+            class="group inline-flex items-center cursor-pointer justify-center gap-2 rounded-xl bg-main-color px-6 py-3.5 font-semibold text-white shadow-lg shadow-main-color/25 transition duration-300 hover:-translate-y-0.5 hover:bg-third-color hover:shadow-xl hover:shadow-main-color/30 active:translate-y-0"
+          >
+            <!-- Home Icon -->
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m2.25 12 8.954-8.954a1.125 1.125 0 0 1 1.592 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125h4.125v-6.75h4.5V21h4.125a1.125 1.125 0 0 0 1.125-1.125V9.75"
+              />
+            </svg>
+
+            Go Home
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= FOOTER TEXT ================= -->
+
+      <p class="mt-8 text-sm text-gray-400">
+        Lost in the Nexora universe?
+        <button
+          type="button"
+          (click)="goHome()"
+          class="font-semibold text-main-color transition hover:text-[#8300e6]"
+        >
+          Let's get you home.
+        </button>
+      </p>
+    </div>
+  </main>
+</div>

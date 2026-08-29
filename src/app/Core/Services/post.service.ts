@@ -18,6 +18,12 @@ export class PostService {
   getALLPosts(): Observable<PostDataResponse> {
     return this.httpClient.get<PostDataResponse>(`${environment.base_url}/posts`, this.myHeaders);
   }
+  getFeedPosts(): Observable<PostDataResponse> {
+    return this.httpClient.get<PostDataResponse>(
+      `${environment.base_url}/posts/feed?only=following&limit=10`,
+      this.myHeaders,
+    );
+  }
   getSinglePost(postId: string): Observable<any> {
     return this.httpClient.get(`${environment.base_url}/posts/${postId}`, this.myHeaders);
   }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notfound',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './notfound.component.css',
 })
 export class NotfoundComponent {
-
+  private readonly router = inject(Router);
+  goHome(): void {
+    this.router.navigate(['/feed']);
+  }
 }

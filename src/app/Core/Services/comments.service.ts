@@ -1,0 +1,30 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { CommentsResponse } from '../Models/comments.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CommentsService {
+  private readonly httpClient = inject(HttpClient);
+  myHeaders: object = {
+    headers: {
+      AUTHORIZATION: `Bearer ${localStorage.getItem('socialToken')}`,
+    },
+  };
+
+  getPostComment(postId: string): Observable<CommentsResponse> {
+    return this.httpClient.get<CommentsResponse>(
+      `${environment.base_url}/posts/${postId}/comments?page=1&limit=10`,
+      this.myHeaders,
+    );
+  }
+  createComment(postId: string): Observable<any> {
+    return this.httpClient.post<any>(
+      `${environment.base_url}/posts/${postId}/comments`,
+      this.myHeaders,
+    );
+  }
+}
