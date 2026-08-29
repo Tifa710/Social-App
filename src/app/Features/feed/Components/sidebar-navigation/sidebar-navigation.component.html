@@ -4,15 +4,15 @@
     <div class="border-b border-gray-100 p-5">
       <div class="flex items-center gap-3">
         <img
-          src="https://i.pravatar.cc/150?img=12"
+          [src]="userData.photo"
           alt="Profile"
           class="h-12 w-12 rounded-full object-cover ring-2 ring-main-color/20"
         />
 
         <div>
-          <h3 class="font-semibold text-gray-900">Abdullatif Tarek</h3>
+          <h3 class="font-semibold text-gray-900">{{ userData.name }}</h3>
 
-          <p class="text-sm text-gray-500">@abdullatif</p>
+          <p class="text-sm text-gray-500">@{{ userData.username }}</p>
         </div>
       </div>
     </div>

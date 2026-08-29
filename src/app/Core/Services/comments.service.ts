@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CommentsResponse } from '../Models/comments.interface';
+import { CommentReplayResponse } from '../Models/commentreplay.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,12 @@ export class CommentsService {
   getPostComment(postId: string): Observable<CommentsResponse> {
     return this.httpClient.get<CommentsResponse>(
       `${environment.base_url}/posts/${postId}/comments?page=1&limit=10`,
+      this.myHeaders,
+    );
+  }
+  getCommentReplay(postId: string, commentId: string): Observable<CommentReplayResponse> {
+    return this.httpClient.get<CommentReplayResponse>(
+      `${environment.base_url}/posts/${postId}/comments/${commentId}/replies?page=1&limit=10`,
       this.myHeaders,
     );
   }

@@ -56,14 +56,14 @@
           class="flex items-center gap-3 rounded-xl p-1.5 pr-2 transition-all duration-200 hover:bg-gray-50"
         >
           <img
-            src="https://i.pravatar.cc/150?img=12"
+            [src]="userData.photo"
             alt="User profile"
             class="h-10 w-10 rounded-full object-cover ring-2 ring-main-color/20"
           />
           <div class="hidden sm:block text-left">
-            <p class="text-sm font-bold text-gray-800">Abdullatif</p>
+            <p class="text-sm font-bold text-gray-800">{{ userData.name }}</p>
 
-            <p class="text-[11px] font-medium text-gray-400">User</p>
+            <p class="text-[11px] font-medium text-gray-400">{{ userData.username }}</p>
           </div>
           <i
             class="fa-solid fa-chevron-down hidden sm:block text-[10px] text-gray-400 transition-transform duration-200"
@@ -75,9 +75,9 @@
             class="absolute right-0 top-[calc(100%+12px)] w-60 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl shadow-black/10"
           >
             <div class="border-b border-gray-100 bg-gray-50 px-4 py-4">
-              <p class="text-sm font-bold text-gray-900">Abdullatif</p>
+              <p class="text-sm font-bold text-gray-900">{{ userData.name }}</p>
 
-              <p class="mt-1 text-xs text-gray-400">abdullatif@example.com</p>
+              <p class="mt-1 text-xs text-gray-400">{{ userData.email }}</p>
             </div>
             <div class="p-2">
               <a
