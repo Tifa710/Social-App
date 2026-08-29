@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { PostService } from '../../../../../../Core/Services/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Post, User } from '../../../../../../Core/Models/post-data.interface';
@@ -8,10 +16,11 @@ import { CommentsService } from '../../../../../../Core/Services/comments.servic
 import { Comment } from '../../../../../../Core/Models/comments.interface';
 import { Reply } from '../../../../../../Core/Models/commentreplay.interface';
 import { getUserData } from '../../../../../../Core/utilities/getUserData';
+import { FormControl, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-community',
-  imports: [DatePipe],
+  imports: [DatePipe, ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './community.component.html',
   styleUrl: './community.component.css',
 })
@@ -23,8 +32,12 @@ export class CommunityComponent implements OnInit, OnDestroy {
   postArray: Post[] = [];
   commentsArray: Comment[] = [];
   commentReplyArray: Reply[] = [];
+  commentControl = new FormControl('');
+  commentReplyControl = new FormControl('');
+  imgUrl: string | ArrayBuffer | null | undefined;
   userId: string = '';
   postId: string = '';
+  selectedFile!: File;
   selectedComment: string = '';
   userData: User = getUserData();
   ngOnInit(): void {
@@ -100,5 +113,62 @@ export class CommunityComponent implements OnInit, OnDestroy {
           console.log(err);
         },
       });
+  }
+  changeFile(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFile = input.files[0];
+    }
+    this.previewImage();
+  }
+  previewImage() {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(this.selectedFile);
+    fileReader.addEventListener('load', (e) => {
+      this.imgUrl = e.target?.result;
+    });
+  }
+  submitComment() {
+    const formdata = new FormData();
+    if (this.commentControl.value) {
+      formdata.append('content', this.commentControl.value);
+    }
+    if (this.selectedFile) {
+      formdata.append('image', this.selectedFile);
+    }
+    this.commentsService.createComment(this.postId, formdata).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.commentControl.reset();
+        this.imgUrl = '';
+        this.getPostCommentsData(this.postId);
+        this.getAllPosts();
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
+  }
+  removeFile(): void {
+    this.imgUrl = '';
+  }
+  submitReplyComment(commentId: string) {
+    const formdata = new FormData();
+    if (this.commentReplyControl.value) {
+      formdata.append('content', this.commentReplyControl.value);
+    }
+    this.commentsService.createCommentReplay(commentId, this.postId, formdata).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.commentReplyControl.reset();
+        this.imgUrl = '';
+        this.getPostCommentsData(this.postId);
+        this.getAllPosts();
+        this.getCommentsReplyData(commentId);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
   }
 }

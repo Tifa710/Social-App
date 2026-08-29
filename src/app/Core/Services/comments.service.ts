@@ -28,9 +28,21 @@ export class CommentsService {
       this.myHeaders,
     );
   }
-  createComment(postId: string): Observable<any> {
-    return this.httpClient.post<any>(
+  createComment(postId: string, data: object): Observable<CommentsResponse> {
+    return this.httpClient.post<CommentsResponse>(
       `${environment.base_url}/posts/${postId}/comments`,
+      data,
+      this.myHeaders,
+    );
+  }
+  createCommentReplay(
+    commentId: string,
+    postId: string,
+    data: object,
+  ): Observable<CommentReplayResponse> {
+    return this.httpClient.post<CommentReplayResponse>(
+      `${environment.base_url}/posts/${postId}/comments/${commentId}/replies`,
+      data,
       this.myHeaders,
     );
   }
