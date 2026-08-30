@@ -36,20 +36,25 @@
           class="absolute right-0 top-11 z-30 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg"
         >
           <button
+            (click)="makeMarkedAndUnMarkedPost(Post.id)"
             class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
           >
-            <i class="fa-solid fa-bookmark w-4 text-gray-400"></i>
-            Save Post
+            @if (Post.bookmarked) {
+              <i class="fa-solid text-main-color fa-bookmark w-4"></i>
+              UnSave Post
+            } @else {
+              <i class="fa-regular fa-bookmark w-4 text-gray-400"></i>
+              Save Post
+            }
           </button>
 
           @if (Post.user._id === userId) {
-            <button
+            <!-- <button
               class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
             >
               <i class="fa-solid fa-pen w-4 text-gray-400"></i>
               Edit Post
-            </button>
-
+            </button> -->
             <button
               (click)="deletePostItem(Post.id)"
               class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50"
@@ -98,9 +103,14 @@
 
     <div class="grid grid-cols-3 gap-2 pt-3">
       <button
+        (click)="makeLikeAndUnLikePost(Post.id)"
         class="cursor-pointer rounded-xl py-2.5 text-sm font-medium text-gray-500 transition hover:bg-main-color/10 hover:text-main-color"
       >
-        <i class="fa-regular fa-heart mr-2"></i>
+        @if (Post.likes.includes(userId)) {
+          <i class="fa-solid text-main-color fa-heart mr-2"></i>
+        } @else {
+          <i class="fa-regular fa-heart mr-2"></i>
+        }
         Like
       </button>
 
@@ -195,6 +205,7 @@
                 </button>
 
                 <button
+                  (click)="deleteComment(comments._id)"
                   type="button"
                   class="text-xs cursor-pointer font-semibold text-gray-400 transition duration-200 hover:text-red-500"
                 >

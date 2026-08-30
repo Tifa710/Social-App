@@ -46,4 +46,10 @@ export class CommentsService {
       this.myHeaders,
     );
   }
+  deleteComment(commentId: string, postId: string): Observable<CommentsResponse> {
+    return this.httpClient.delete<CommentsResponse>(
+      `${environment.base_url}/posts/${postId}/comments/${commentId}`,
+      this.myHeaders,
+    );
+  }
 }

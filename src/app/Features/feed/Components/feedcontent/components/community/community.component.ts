@@ -91,7 +91,6 @@ export class CommunityComponent implements OnInit, OnDestroy {
         this.replaySubscription?.unsubscribe();
         this.commentReplyArray = [];
         this.postId = postId;
-        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -107,7 +106,6 @@ export class CommunityComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.commentReplyArray = res.data.replies;
-          console.log(res);
         },
         error: (err) => {
           console.log(err);
@@ -138,7 +136,6 @@ export class CommunityComponent implements OnInit, OnDestroy {
     }
     this.commentsService.createComment(this.postId, formdata).subscribe({
       next: (res) => {
-        console.log(res);
         this.commentControl.reset();
         this.imgUrl = '';
         this.getPostCommentsData(this.postId);
@@ -159,12 +156,49 @@ export class CommunityComponent implements OnInit, OnDestroy {
     }
     this.commentsService.createCommentReplay(commentId, this.postId, formdata).subscribe({
       next: (res) => {
-        console.log(res);
         this.commentReplyControl.reset();
         this.imgUrl = '';
         this.getPostCommentsData(this.postId);
         this.getAllPosts();
         this.getCommentsReplyData(commentId);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
+  }
+  deleteComment(commentId: string): void {
+    this.commentsService.deleteComment(commentId, this.postId).subscribe({
+      next: (res) => {
+        this.getAllPosts();
+        this.getPostCommentsData(this.postId);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
+  }
+  makeLikeAndUnLikePost(postId: string): void {
+    this.postService.putLikeAndUnLikePost(postId).subscribe({
+      next: (res) => {
+        const post = this.postArray.find((post) => post.id == postId);
+        if (post) {
+          post.likes = res.data.post.likes;
+          post.likesCount = res.data.post.likesCount;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+    });
+  }
+  makeMarkedAndUnMarkedPost(postId: string): void {
+    this.postService.putMarkedAndUnMarkedPost(postId).subscribe({
+      next: (res) => {
+        const post = this.postArray.find((post) => post.id == postId);
+        if (post) {
+          post.bookmarked = res.data.bookmarked;
+        }
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
