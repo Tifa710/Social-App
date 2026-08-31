@@ -12,51 +12,37 @@ import { BookMarkedPostResponse } from '../Models/bookmarkedpost.interface';
 })
 export class PostService {
   private readonly httpClient = inject(HttpClient);
-  myHeaders: object = {
-    headers: {
-      AUTHORIZATION: `Bearer ${localStorage.getItem('socialToken')}`,
-    },
-  };
+
   getALLPosts(): Observable<PostDataResponse> {
-    return this.httpClient.get<PostDataResponse>(`${environment.base_url}/posts`, this.myHeaders);
+    return this.httpClient.get<PostDataResponse>(`${environment.base_url}/posts`);
   }
   getFeedPosts(): Observable<PostDataResponse> {
     return this.httpClient.get<PostDataResponse>(
       `${environment.base_url}/posts/feed?only=following&limit=10`,
-      this.myHeaders,
     );
   }
   getSinglePost(postId: string): Observable<any> {
-    return this.httpClient.get(`${environment.base_url}/posts/${postId}`, this.myHeaders);
+    return this.httpClient.get(`${environment.base_url}/posts/${postId}`);
   }
   createPost(data: object): Observable<PostMutationResponse> {
-    return this.httpClient.post<PostMutationResponse>(
-      `${environment.base_url}/posts/`,
-      data,
-      this.myHeaders,
-    );
+    return this.httpClient.post<PostMutationResponse>(`${environment.base_url}/posts/`, data);
   }
   updatePost(postId: string): Observable<any> {
-    return this.httpClient.put(`${environment.base_url}/posts/${postId}`, this.myHeaders);
+    return this.httpClient.put(`${environment.base_url}/posts/${postId}`, {});
   }
   deletePost(postId: string): Observable<PostMutationResponse> {
-    return this.httpClient.delete<PostMutationResponse>(
-      `${environment.base_url}/posts/${postId}`,
-      this.myHeaders,
-    );
+    return this.httpClient.delete<PostMutationResponse>(`${environment.base_url}/posts/${postId}`);
   }
   putLikeAndUnLikePost(postId: string): Observable<likePostResponse> {
     return this.httpClient.put<likePostResponse>(
       `${environment.base_url}/posts/${postId}/like`,
       {},
-      this.myHeaders,
     );
   }
   putMarkedAndUnMarkedPost(postId: string): Observable<BookMarkedPostResponse> {
     return this.httpClient.put<BookMarkedPostResponse>(
       `${environment.base_url}/posts/${postId}/bookmark`,
       {},
-      this.myHeaders,
     );
   }
 }

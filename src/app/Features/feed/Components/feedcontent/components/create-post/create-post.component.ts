@@ -53,9 +53,6 @@ export class CreatePostComponent {
           this.imgUrl = '';
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
     });
   }
   removeFile(): void {

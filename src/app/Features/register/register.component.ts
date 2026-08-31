@@ -72,10 +72,7 @@ export class RegisterComponent implements OnInit {
             }, 1000);
           }
         },
-        error: (err: HttpErrorResponse) => {
-          this.errMsg = err.error.message;
-          this.loading = false;
-        },
+
         complete: () => {
           this.loading = false;
         },

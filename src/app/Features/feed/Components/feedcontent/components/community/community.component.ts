@@ -62,9 +62,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
           this.postArray = res.data.posts;
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   getUserId(): void {
@@ -79,9 +77,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
           this.getAllPosts();
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   getPostCommentsData(postId: string): void {
@@ -92,9 +88,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
         this.commentReplyArray = [];
         this.postId = postId;
       },
-      error: (err) => {
-        console.log(err);
-      },
+
     });
   }
   getCommentsReplyData(commentId: string): void {
@@ -107,9 +101,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.commentReplyArray = res.data.replies;
         },
-        error: (err) => {
-          console.log(err);
-        },
+
       });
   }
   changeFile(e: Event): void {
@@ -141,9 +133,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
         this.getPostCommentsData(this.postId);
         this.getAllPosts();
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   removeFile(): void {
@@ -162,9 +152,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
         this.getAllPosts();
         this.getCommentsReplyData(commentId);
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   deleteComment(commentId: string): void {
@@ -173,9 +161,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
         this.getAllPosts();
         this.getPostCommentsData(this.postId);
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   makeLikeAndUnLikePost(postId: string): void {
@@ -187,9 +173,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
           post.likesCount = res.data.post.likesCount;
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
   makeMarkedAndUnMarkedPost(postId: string): void {
@@ -200,9 +184,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
           post.bookmarked = res.data.bookmarked;
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
+
     });
   }
 }

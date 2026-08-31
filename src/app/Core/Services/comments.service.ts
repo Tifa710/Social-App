@@ -10,29 +10,21 @@ import { CommentReplayResponse } from '../Models/commentreplay.interface';
 })
 export class CommentsService {
   private readonly httpClient = inject(HttpClient);
-  myHeaders: object = {
-    headers: {
-      AUTHORIZATION: `Bearer ${localStorage.getItem('socialToken')}`,
-    },
-  };
 
   getPostComment(postId: string): Observable<CommentsResponse> {
     return this.httpClient.get<CommentsResponse>(
       `${environment.base_url}/posts/${postId}/comments?page=1&limit=10`,
-      this.myHeaders,
     );
   }
   getCommentReplay(postId: string, commentId: string): Observable<CommentReplayResponse> {
     return this.httpClient.get<CommentReplayResponse>(
       `${environment.base_url}/posts/${postId}/comments/${commentId}/replies?page=1&limit=10`,
-      this.myHeaders,
     );
   }
   createComment(postId: string, data: object): Observable<CommentsResponse> {
     return this.httpClient.post<CommentsResponse>(
       `${environment.base_url}/posts/${postId}/comments`,
       data,
-      this.myHeaders,
     );
   }
   createCommentReplay(
@@ -43,13 +35,11 @@ export class CommentsService {
     return this.httpClient.post<CommentReplayResponse>(
       `${environment.base_url}/posts/${postId}/comments/${commentId}/replies`,
       data,
-      this.myHeaders,
     );
   }
   deleteComment(commentId: string, postId: string): Observable<CommentsResponse> {
     return this.httpClient.delete<CommentsResponse>(
       `${environment.base_url}/posts/${postId}/comments/${commentId}`,
-      this.myHeaders,
     );
   }
 }

@@ -121,59 +121,66 @@
             Saved Posts
           </button>
         </div>
-        <article
-          class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
-        >
-          <div class="flex items-start justify-between p-5">
-            <div class="flex gap-3">
-              <img
-                [src]="myUser.photo"
-                [alt]="myUser.name"
-                class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/10"
-              />
-              <div>
-                <div class="flex items-center gap-2">
-                  <h3 class="text-sm font-bold text-gray-900">{{ myUser.name }}</h3>
+
+        @for (Post of postArray; track Post._id) {
+          <article
+            class="overflow-hidden mt-3 rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
+          >
+            <div class="flex items-start justify-between p-5">
+              <div class="flex gap-3">
+                <img
+                  [src]="Post.user.photo"
+                  [alt]="Post.user.name"
+                  class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/10"
+                />
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-sm font-bold text-gray-900">{{ Post.user.name }}</h3>
+                  </div>
+                  <p class="text-xs text-gray-500">@{{ Post.user.name }}</p>
                 </div>
-                <p class="text-xs text-gray-500">@{{ myUser.username }}</p>
               </div>
             </div>
-          </div>
-          <div class="px-5 pb-4">
-            <p class="text-sm leading-7 text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi alias, dolore officiis
-              obcaecati inventore odio repudiandae. Excepturi, et amet! Qui, minus numquam modi
-              molestias dolore quo commodi? Eligendi, voluptates recusandae.
-            </p>
-          </div>
-          <div class="overflow-hidden bg-gray-100">
-            <img
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
-              alt="Post image"
-              class="max-h-[500px] w-full object-cover transition duration-500 hover:scale-[1.02]"
-            />
-          </div>
-          <div class="flex items-center justify-between px-5 py-3">
-            <div class="flex items-center gap-1">
-              <div
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-main-color text-[10px] text-white"
-              >
-                <i class="fa-solid fa-heart"></i>
+            @if (Post.body) {
+              <div class="px-5 pb-4">
+                <p class="text-sm leading-7 text-gray-700">
+                  {{ Post.body }}
+                </p>
               </div>
-              <span class="ml-1 text-xs font-medium text-gray-500"> 128 Likes </span>
+            }
+            @if (Post.image) {
+              <div class="overflow-hidden bg-gray-100">
+                <img
+                  [src]="Post.image"
+                  alt="Post image"
+                  class="max-h-[500px] w-full object-contain transition duration-500 hover:scale-[1.02]"
+                />
+              </div>
+            }
+            <div class="flex items-center justify-between px-5 py-3">
+              <div class="flex items-center gap-1">
+                <div
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-main-color text-[10px] text-white"
+                >
+                  <i class="fa-solid fa-heart"></i>
+                </div>
+                <span class="ml-1 text-xs font-medium text-gray-500">
+                  {{ Post.likesCount }} Likes
+                </span>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-gray-500">
+                <span> {{ Post.commentsCount }} Comments </span>
+                <span> {{ Post.sharesCount }} Shares </span>
+              </div>
             </div>
-            <div class="flex items-center gap-4 text-xs text-gray-500">
-              <span> 24 Comments </span>
-              <span> 8 Shares </span>
+            <div class="px-5 pb-4">
+              <p class="flex justify-end items-center gap-1 text-xs text-gray-400">
+                <i class="fa-regular fa-clock"></i>
+                {{ Post.createdAt | date: 'short' }}
+              </p>
             </div>
-          </div>
-          <div class="px-5 pb-4">
-            <p class="flex justify-end items-center gap-1 text-xs text-gray-400">
-              <i class="fa-regular fa-clock"></i>
-              August 30, 2026
-            </p>
-          </div>
-        </article>
+          </article>
+        }
       </div>
     </div>
   </section>

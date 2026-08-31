@@ -56,12 +56,7 @@ export class LoginComponent {
             }, 1000);
           }
         },
-        error: (err: HttpErrorResponse) => {
-          this.errMsg = err.error.message;
-          console.log(err);
 
-          this.loading = false;
-        },
         complete: () => {
           this.loading = false;
         },

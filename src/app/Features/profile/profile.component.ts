@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { User } from '../../Core/Models/userdata.interface';
 import { MyUserService } from '../../Core/Services/myuser.service';
+import { Post } from '../../Core/Models/post-data.interface';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,7 @@ import { MyUserService } from '../../Core/Services/myuser.service';
 export class ProfileComponent implements OnInit {
   private myUserService = inject(MyUserService);
   myUser!: User;
+  postArray: Post[] = [];
   ngOnInit(): void {
     this.getMyUser();
   }
@@ -20,10 +22,18 @@ export class ProfileComponent implements OnInit {
     this.myUserService.getMyUserData().subscribe({
       next: (res) => {
         this.myUser = res.data.user;
+        this.getMyPosts();
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
+
+    });
+  }
+  getMyPosts(): void {
+    this.myUserService.getMyUserPosts(this.myUser._id).subscribe({
+      next: (res) => {
+        this.postArray = res.data.posts;
+        console.log(res);
       },
+
     });
   }
 }
