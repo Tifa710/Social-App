@@ -9,36 +9,33 @@
         <h1 class="text-xl font-extrabold tracking-tight text-main-color">Nexora</h1>
       </div>
     </a>
-
-    <div class="hidden md:flex items-center gap-1 rounded-xl bg-gray-100 p-1.5">
+    <div class="flex items-center gap-1 rounded-xl bg-gray-100 p-1.5">
       <a
         routerLink="/feed"
         routerLinkActive="bg-white text-main-color shadow-sm"
-        class="flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+        class="flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color md:px-5"
       >
         <i class="fa-solid fa-house"></i>
 
-        <span> Home </span>
+        <span class="hidden md:inline"> Home </span>
       </a>
-
       <a
         routerLink="/profile"
         routerLinkActive="bg-white text-main-color shadow-sm"
-        class="flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+        class="flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color md:px-5"
       >
         <i class="fa-solid fa-user"></i>
 
-        <span> Profile </span>
+        <span class="hidden md:inline"> Profile </span>
       </a>
-
       <a
         routerLink="/notification"
         routerLinkActive="bg-white text-main-color shadow-sm"
-        class="relative flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color cursor-pointer"
+        class="relative flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-500 transition-all duration-200 hover:bg-white hover:text-main-color md:px-5"
       >
         <i class="fa-solid fa-bell"></i>
 
-        <span> Notifications </span>
+        <span class="hidden md:inline"> Notifications </span>
 
         <span
           class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-main-color px-1 text-[9px] font-bold text-white"
@@ -66,7 +63,7 @@
             <p class="text-[11px] font-medium text-gray-400">{{ userData.username }}</p>
           </div>
           <i
-            class="fa-solid fa-chevron-down hidden sm:block text-[10px] text-gray-400 transition-transform duration-200"
+            class="fa-solid fa-chevron-down hidden sm:block text-2xs text-gray-400 transition-transform duration-200"
             [class.rotate-180]="isUserMenuOpen"
           ></i>
         </button>

@@ -6,6 +6,7 @@ import { PostDataResponse } from '../Models/post-data.interface';
 import { PostMutation, PostMutationResponse } from '../Models/post-mutation.interface';
 import { likePostResponse } from '../Models/likepost.interface';
 import { BookMarkedPostResponse } from '../Models/bookmarkedpost.interface';
+import { BookMarksPostsResponse } from '../Models/bookmarksposts.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,9 @@ export class PostService {
     return this.httpClient.get<PostDataResponse>(
       `${environment.base_url}/posts/feed?only=following&limit=10`,
     );
+  }
+  getBookMarksPosts(): Observable<BookMarksPostsResponse> {
+    return this.httpClient.get<BookMarksPostsResponse>(`${environment.base_url}/users/bookmarks`);
   }
   getSinglePost(postId: string): Observable<any> {
     return this.httpClient.get(`${environment.base_url}/posts/${postId}`);

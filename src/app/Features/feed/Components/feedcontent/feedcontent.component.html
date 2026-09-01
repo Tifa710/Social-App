@@ -1,4 +1,748 @@
-<main class="lg:col-span-6">
-  <app-create-post />
-  <router-outlet />
-</main>
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+  <aside class="order-1 lg:order-1 lg:col-span-4">
+    <div
+      class="sticky top-24 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
+    >
+      <div class="border-b border-gray-100 from-main-color/5 to-transparent p-5">
+        <div class="flex items-center gap-3">
+          <div class="relative shrink-0">
+            <img
+              [src]="userData.photo"
+              [alt]="userData.name"
+              class="h-12 w-12 rounded-full object-cover ring-2 ring-main-color/20"
+            />
+
+            <span
+              class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500"
+            ></span>
+          </div>
+
+          <div class="min-w-0">
+            <h3 class="truncate font-bold text-gray-900">
+              {{ userData.name }}
+            </h3>
+
+            <p class="truncate text-sm text-gray-500">@{{ userData.username }}</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="p-3">
+        <a
+          (click)="onFeedPost()"
+          [class]="{
+            'bg-main-color/10': isFeedPostActive,
+            'text-main-color': isFeedPostActive,
+            'shadow-sm': isFeedPostActive,
+            'text-gray-600': isFeedPostActive,
+          }"
+          class="mb-1 flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-main-color/10 hover:text-main-color"
+        >
+          <span
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50 transition group-hover:bg-main-color/10"
+          >
+            <i class="fa-solid fa-house w-5 text-center"></i>
+          </span>
+
+          <span>Feed</span>
+        </a>
+
+        <a
+          (click)="onGetMYPost()"
+          [class]="{
+            'bg-main-color/10': isMyPostActive,
+            'text-main-color': isMyPostActive,
+            'shadow-sm': isMyPostActive,
+            'text-gray-600': isMyPostActive,
+          }"
+          class="mb-1 flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-main-color/10 hover:text-main-color"
+        >
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50">
+            <i class="fa-solid fa-user w-5 text-center"></i>
+          </span>
+
+          <span>My Posts</span>
+        </a>
+
+        <a
+          (click)="getAllPosts()"
+          [class]="{
+            'bg-main-color/10': isCommunityPostActive,
+            'text-main-color': isCommunityPostActive,
+            'shadow-sm': isCommunityPostActive,
+            'text-gray-600': isCommunityPostActive,
+          }"
+          class="mb-1 flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-main-color/10 hover:text-main-color"
+        >
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50">
+            <i class="fa-solid fa-users w-5 text-center"></i>
+          </span>
+
+          <span>Community</span>
+        </a>
+
+        <a
+          (click)="onGetMarkedPost()"
+          [class]="{
+            'bg-main-color/10': isSavedPostActive,
+            'text-main-color': isSavedPostActive,
+            'shadow-sm': isSavedPostActive,
+            'text-gray-600': isSavedPostActive,
+          }"
+          class="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-main-color/10 hover:text-main-color"
+        >
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-50">
+            <i class="fa-solid fa-bookmark w-5 text-center"></i>
+          </span>
+
+          <span>Saved Posts</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+  <main class="order-2 lg:order-2 lg:col-span-8">
+    <form
+      #form
+      (submit)="submitPost($event, form)"
+      class="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+    >
+      <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+        <div class="flex min-w-0 items-center gap-3">
+          <div class="relative shrink-0">
+            <img
+              [src]="userData.photo"
+              alt="Profile"
+              class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/20"
+            />
+
+            <span
+              class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500"
+            ></span>
+          </div>
+
+          <div class="min-w-0 leading-tight">
+            <h3 class="truncate text-sm font-bold text-gray-900">
+              {{ userData.name }}
+            </h3>
+
+            <p class="mt-1 truncate text-xs text-gray-500">
+              {{ userData.email }}
+            </p>
+          </div>
+        </div>
+        <div class="relative shrink-0">
+          <label for="privacy" class="sr-only"> Post privacy </label>
+          <select
+            [formControl]="privacyControl"
+            id="privacy"
+            name="privacy"
+            class="cursor-pointer appearance-none rounded-xl border border-gray-200 bg-second-color py-2 pl-3 pr-8 text-xs font-semibold text-gray-600 outline-none transition-all hover:border-main-color/30 hover:text-main-color focus:border-main-color focus:bg-white focus:ring-4 focus:ring-main-color/10"
+          >
+            <option value="public">🌍 Public</option>
+            <option value="following">👥 Friends</option>
+            <option value="only_me">🔒 Only me</option>
+          </select>
+          <i
+            class="fa-solid fa-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[9px] text-gray-400"
+          ></i>
+        </div>
+      </div>
+      <div class="p-5">
+        <textarea
+          [formControl]="textContentControl"
+          id="postContent"
+          name="content"
+          rows="4"
+          placeholder="What's on your mind, Abdullatif?"
+          class="w-full resize-none rounded-2xl border border-transparent bg-second-color p-4 text-sm leading-7 text-gray-700 outline-none transition-all duration-200 placeholder:text-gray-400 focus:border-main-color/20 focus:bg-white focus:ring-4 focus:ring-main-color/5"
+        ></textarea>
+        @if (postImgUrl) {
+          <div class="relative mt-4 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50">
+            <img
+              [src]="postImgUrl"
+              alt="Create Post Photo"
+              class="max-h-80 w-full object-contain"
+            />
+
+            <button
+              type="button"
+              (click)="removeFile()"
+              aria-label="Remove image"
+              class="absolute right-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-red-500 active:scale-95"
+            >
+              <i class="fas fa-xmark text-sm"></i>
+            </button>
+          </div>
+        }
+        <div class="mt-4">
+          <label
+            for="postMedia"
+            class="group flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-gray-200 bg-gray-50 p-3 transition-all duration-200 hover:border-main-color/40 hover:bg-main-color/5"
+          >
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-main-color/10 text-main-color transition-all group-hover:bg-main-color group-hover:text-white"
+            >
+              <i class="fa-solid fa-image"></i>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-semibold text-gray-700">Add photos or videos</p>
+
+              <p class="mt-0.5 truncate text-xs text-gray-400">
+                Share something visual with your friends
+              </p>
+            </div>
+
+            <i
+              class="fa-solid fa-plus text-sm text-gray-400 transition group-hover:text-main-color"
+            ></i>
+          </label>
+
+          <input
+            (change)="postChangeFile($event)"
+            id="postMedia"
+            type="file"
+            accept="image/*,video/*"
+            class="hidden"
+          />
+        </div>
+
+        <div class="mt-5 flex justify-end border-t border-gray-100 pt-4">
+          <button
+            type="submit"
+            class="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-button-color px-7 py-3 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-main-color hover:shadow-lg hover:shadow-main-color/20 active:scale-[0.97]"
+          >
+            <span>Share Post</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    @if (isCommunityPostActive || isFeedPostActive || isMyPostActive) {
+      @for (Post of postArray; track Post.id) {
+        <article
+          class="mb-5 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+        >
+          <div class="flex items-start justify-between p-5">
+            <div class="flex min-w-0 gap-3">
+              <img
+                [src]="Post.user.photo"
+                [alt]="Post.user.name"
+                class="h-11 w-11 shrink-0 rounded-full object-cover ring-1 ring-gray-100"
+              />
+
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="font-bold text-gray-900">
+                    {{ Post.user.name }}
+                  </h3>
+
+                  <span class="text-gray-300">•</span>
+
+                  <span class="text-xs text-gray-500">
+                    {{ Post.createdAt | date: 'short' }}
+                  </span>
+                  <span class="text-gray-300">•</span>
+
+                  <span class="text-xs font-medium text-main-color">
+                    {{ Post.privacy }}
+                  </span>
+                </div>
+
+                <div class="mt-1 flex items-center gap-2">
+                  <p class="text-sm text-gray-500">
+                    {{ Post.user.username }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <details class="relative shrink-0">
+              <summary
+                class="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-xl text-gray-400 transition hover:bg-second-color hover:text-gray-700"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </summary>
+
+              <div
+                (click)="$event.stopPropagation()"
+                class="absolute right-0 top-11 z-30 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-xl"
+              >
+                <button
+                  type="button"
+                  (click)="makeMarkedAndUnMarkedPost(Post.id)"
+                  class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-gray-700 transition hover:bg-gray-50"
+                >
+                  @if (Post.bookmarked) {
+                    <i class="fa-solid fa-bookmark w-4 text-main-color"></i>
+
+                    <span>Unsave Post</span>
+                  } @else {
+                    <i class="fa-regular fa-bookmark w-4 text-gray-400"></i>
+
+                    <span>Save Post</span>
+                  }
+                </button>
+
+                @if (Post.user._id === userId) {
+                  <button
+                    type="button"
+                    (click)="deletePostItem(Post.id)"
+                    class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-red-500 transition hover:bg-red-50"
+                  >
+                    <i class="fa-solid fa-trash w-4"></i>
+                    <span>Delete Post</span>
+                  </button>
+                }
+              </div>
+            </details>
+          </div>
+
+          @if (Post.body) {
+            <div class="px-5 pb-2">
+              <p class="whitespace-pre-line text-sm leading-7 text-gray-700">
+                {{ Post.body }}
+              </p>
+            </div>
+          }
+
+          @if (Post.image) {
+            <div class="mt-3 overflow-hidden bg-gray-50">
+              <img
+                [src]="Post.image"
+                alt="Post Photo"
+                class="max-h-[500px] w-full object-contain transition duration-500 hover:scale-[1.01]"
+              />
+            </div>
+          }
+
+          <div
+            class="mx-5 mt-4 flex items-center justify-between border-b border-gray-100 pb-3 text-sm text-gray-500"
+          >
+            <span class="flex items-center gap-1.5">
+              <span class="flex h-6 w-6 items-center justify-center">
+                <i class="fa-solid fa-heart text-xs text-main-color"></i>
+              </span>
+
+              {{ Post.likesCount }} likes
+            </span>
+
+            <label
+              (click)="getPostCommentsData(Post.id)"
+              for="comments-modal"
+              class="cursor-pointer transition hover:text-main-color"
+            >
+              {{ Post.commentsCount }} comments
+            </label>
+          </div>
+
+          <div class="grid grid-cols-3 gap-1 p-3">
+            <button
+              type="button"
+              (click)="makeLikeAndUnLikePost(Post.id)"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              @if (Post.likes.includes(userData._id)) {
+                <i class="fa-solid fa-heart text-main-color"></i>
+              } @else {
+                <i class="fa-regular fa-heart"></i>
+              }
+
+              <span>Like</span>
+            </button>
+
+            <label
+              (click)="getPostCommentsData(Post.id)"
+              for="comments-modal"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              <i class="fa-regular fa-comment"></i>
+
+              <span>Comment</span>
+            </label>
+
+            <button
+              type="button"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              <i class="fa-solid fa-share"></i>
+
+              <span>Share</span>
+            </button>
+          </div>
+        </article>
+      }
+    } @else if (isSavedPostActive) {
+      @for (Post of bookMarkedPostArray; track Post.id) {
+        <article
+          class="mb-5 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+        >
+          <div class="flex items-start justify-between p-5">
+            <div class="flex min-w-0 gap-3">
+              <img
+                [src]="Post.user.photo"
+                [alt]="Post.user.name"
+                class="h-11 w-11 shrink-0 rounded-full object-cover ring-1 ring-gray-100"
+              />
+
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="font-bold text-gray-900">
+                    {{ Post.user.name }}
+                  </h3>
+
+                  <span class="text-gray-300">•</span>
+
+                  <span class="text-xs text-gray-500">
+                    {{ Post.createdAt | date: 'short' }}
+                  </span>
+                  <span class="text-gray-300">•</span>
+
+                  <span class="text-xs font-medium text-main-color">
+                    {{ Post.privacy }}
+                  </span>
+                </div>
+
+                <div class="mt-1 flex items-center gap-2">
+                  <p class="text-sm text-gray-500">
+                    {{ Post.user.username }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <details class="relative shrink-0">
+              <summary
+                class="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-xl text-gray-400 transition hover:bg-second-color hover:text-gray-700"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </summary>
+
+              <div
+                (click)="$event.stopPropagation()"
+                class="absolute right-0 top-11 z-30 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-xl"
+              >
+                <button
+                  type="button"
+                  (click)="makeMarkedAndUnMarkedPost(Post.id)"
+                  class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-gray-700 transition hover:bg-gray-50"
+                >
+                  @if (Post.bookmarked) {
+                    <i class="fa-solid fa-bookmark w-4 text-main-color"></i>
+
+                    <span>Unsave Post</span>
+                  } @else {
+                    <i class="fa-regular fa-bookmark w-4 text-gray-400"></i>
+
+                    <span>Save Post</span>
+                  }
+                </button>
+
+                @if (Post.user._id === userId) {
+                  <button
+                    type="button"
+                    (click)="deletePostItem(Post.id)"
+                    class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm text-red-500 transition hover:bg-red-50"
+                  >
+                    <i class="fa-solid fa-trash w-4"></i>
+                    <span>Delete Post</span>
+                  </button>
+                }
+              </div>
+            </details>
+          </div>
+
+          @if (Post.body) {
+            <div class="px-5 pb-2">
+              <p class="whitespace-pre-line text-sm leading-7 text-gray-700">
+                {{ Post.body }}
+              </p>
+            </div>
+          }
+
+          @if (Post.image) {
+            <div class="mt-3 overflow-hidden bg-gray-50">
+              <img
+                [src]="Post.image"
+                alt="Post Photo"
+                class="max-h-125 w-full object-contain transition duration-500 hover:scale-[1.01]"
+              />
+            </div>
+          }
+
+          <div
+            class="mx-5 mt-4 flex items-center justify-between border-b border-gray-100 pb-3 text-sm text-gray-500"
+          >
+            <span class="flex items-center gap-1.5">
+              <span class="flex h-6 w-6 items-center justify-center">
+                <i class="fa-solid fa-heart text-xs text-main-color"></i>
+              </span>
+
+              {{ Post.likesCount }} likes
+            </span>
+
+            <label
+              (click)="getPostCommentsData(Post.id)"
+              for="comments-modal"
+              class="cursor-pointer transition hover:text-main-color"
+            >
+              {{ Post.commentsCount }} comments
+            </label>
+          </div>
+
+          <div class="grid grid-cols-3 gap-1 p-3">
+            <button
+              type="button"
+              (click)="makeLikeAndUnLikePost(Post.id)"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              @if (Post.likes.includes(userData._id)) {
+                <i class="fa-solid fa-heart text-main-color"></i>
+              } @else {
+                <i class="fa-regular fa-heart"></i>
+              }
+
+              <span>Like</span>
+            </button>
+
+            <label
+              (click)="getPostCommentsData(Post.id)"
+              for="comments-modal"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              <i class="fa-regular fa-comment"></i>
+
+              <span>Comment</span>
+            </label>
+
+            <button
+              type="button"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-gray-500 transition-all hover:bg-main-color/10 hover:text-main-color"
+            >
+              <i class="fa-solid fa-share"></i>
+
+              <span>Share</span>
+            </button>
+          </div>
+        </article>
+      }
+    }
+  </main>
+</div>
+<input type="checkbox" id="comments-modal" class="peer hidden" />
+<label
+  for="comments-modal"
+  class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-3 opacity-0 backdrop-blur-sm transition-all duration-300 peer-checked:pointer-events-auto peer-checked:opacity-100 sm:p-5"
+>
+  <div
+    (click)="$event.stopPropagation()"
+    class="flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+  >
+    <div
+      class="flex shrink-0 items-center justify-between border-b border-gray-100 bg-white px-5 py-4"
+    >
+      <div>
+        <h2 class="text-lg font-bold text-gray-900">Comments</h2>
+
+        <p class="mt-0.5 text-xs text-gray-400">Join the conversation</p>
+      </div>
+
+      <label
+        for="comments-modal"
+        class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-5">
+      @if (commentsArray.length == 0) {
+        <div class="flex min-h-60 flex-col items-center justify-center text-center">
+          <div
+            class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-main-color/10 text-main-color"
+          >
+            <i class="fa-regular fa-comment-dots text-2xl"></i>
+          </div>
+
+          <h3 class="font-bold text-gray-800">No comments yet</h3>
+
+          <p class="mt-1 max-w-xs text-sm text-gray-400">
+            Be the first person to share your thoughts on this post.
+          </p>
+        </div>
+      }
+
+      @for (comments of commentsArray; track comments._id) {
+        <div class="mb-6 flex gap-3">
+          <img
+            [src]="comments.commentCreator.photo"
+            [alt]="comments.commentCreator.name"
+            class="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-gray-100"
+          />
+
+          <div class="min-w-0 flex-1">
+            <div class="w-fit max-w-[95%] rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3">
+              <p class="text-sm font-bold text-gray-900">
+                {{ comments.commentCreator.name }}
+              </p>
+
+              <p class="mt-1 text-sm leading-6 text-gray-600">
+                {{ comments.content }}
+              </p>
+
+              @if (comments.image) {
+                <div class="mt-3 overflow-hidden rounded-xl">
+                  <img
+                    [src]="comments.image"
+                    alt="Comment image"
+                    class="h-32 w-32 cursor-pointer rounded-xl object-cover transition hover:scale-105"
+                  />
+                </div>
+              }
+
+              <span class="mt-2 block text-[11px] text-gray-400">
+                {{ comments.createdAt | date: 'short' }}
+              </span>
+            </div>
+
+            <div class="mt-2 flex items-center gap-4 px-2">
+              <button
+                type="button"
+                (click)="getCommentsReplyData(comments._id)"
+                class="cursor-pointer text-xs font-semibold text-gray-500 transition hover:text-main-color"
+              >
+                Reply ({{ comments.repliesCount }})
+              </button>
+
+              <button
+                type="button"
+                (click)="deleteComment(comments._id)"
+                class="cursor-pointer text-xs font-semibold text-gray-400 transition hover:text-red-500"
+              >
+                Delete
+              </button>
+            </div>
+
+            @if (comments._id === selectedComment) {
+              <div class="mt-3 flex gap-2">
+                <img
+                  [src]="userData.photo"
+                  [alt]="userData.name"
+                  class="h-8 w-8 shrink-0 rounded-full object-cover"
+                />
+
+                <div
+                  class="flex flex-1 items-center rounded-2xl border border-gray-200 bg-white px-3 py-1 shadow-sm transition focus-within:border-main-color/40 focus-within:ring-4 focus-within:ring-main-color/5"
+                >
+                  <input
+                    [formControl]="commentReplyControl"
+                    type="text"
+                    placeholder="Write a reply..."
+                    class="min-w-0 flex-1 border-none bg-transparent px-2 py-2 text-sm text-gray-700 outline-none placeholder:text-gray-400 focus:ring-0"
+                  />
+
+                  <button
+                    (click)="submitReplyComment(comments._id)"
+                    type="button"
+                    class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-main-color text-white transition hover:bg-third-color active:scale-95"
+                  >
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                  </button>
+                </div>
+              </div>
+
+              @for (Reply of commentReplyArray; track Reply.id) {
+                <div class="mt-4 ml-3 border-l-2 border-main-color/10 pl-4">
+                  <div class="flex gap-2.5">
+                    <img
+                      [src]="Reply.commentCreator.photo"
+                      [alt]="Reply.commentCreator.name"
+                      class="h-8 w-8 shrink-0 rounded-full object-cover"
+                    />
+
+                    <div class="rounded-2xl rounded-tl-md bg-gray-50 px-3.5 py-2.5">
+                      <p class="text-xs font-bold text-gray-900">
+                        {{ Reply.commentCreator.name }}
+                      </p>
+
+                      <p class="mt-1 text-sm leading-5 text-gray-600">
+                        {{ Reply.content }}
+                      </p>
+
+                      <span class="mt-1 block text-[11px] text-gray-400">
+                        {{ Reply.createdAt | date: 'short' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="border-t border-gray-100 bg-gray-50/70 p-4">
+      @if (imgUrl) {
+        <div
+          class="relative mb-3 h-24 w-24 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+        >
+          <img [src]="imgUrl" alt="Comment Photo" class="h-full w-full object-cover" />
+
+          <button
+            type="button"
+            (click)="removeFile()"
+            aria-label="Remove image"
+            class="absolute right-1.5 top-1.5 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-red-500"
+          >
+            <i class="fas fa-xmark text-[10px]"></i>
+          </button>
+        </div>
+      }
+
+      <div class="flex items-center gap-2">
+        <img
+          [src]="userData.photo"
+          [alt]="userData.name"
+          class="h-9 w-9 shrink-0 rounded-full object-cover"
+        />
+
+        <div
+          class="flex flex-1 items-center rounded-2xl border border-gray-200 bg-white px-3 transition focus-within:border-main-color focus-within:ring-4 focus-within:ring-main-color/10"
+        >
+          <input
+            [formControl]="commentControl"
+            type="text"
+            placeholder="Write a comment..."
+            class="min-w-0 flex-1 border-none bg-transparent px-2 py-2.5 text-sm text-gray-700 outline-none placeholder:text-gray-400 focus:ring-0"
+          />
+
+          <label
+            for="comment-image"
+            class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-gray-400 transition hover:bg-main-color/10 hover:text-main-color"
+            title="Add photo"
+          >
+            <i class="fa-regular fa-image"></i>
+          </label>
+
+          <input
+            (change)="changeFile($event)"
+            id="comment-image"
+            type="file"
+            accept="image/*"
+            class="hidden"
+          />
+        </div>
+
+        <button
+          (click)="submitComment()"
+          type="button"
+          class="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-main-color text-white shadow-sm transition hover:bg-third-color hover:shadow-md active:scale-95"
+          title="Send comment"
+        >
+          <i class="fa-solid fa-paper-plane text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</label>

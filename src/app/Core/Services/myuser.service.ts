@@ -14,7 +14,7 @@ export class MyUserService {
   getMyUserData(): Observable<UserdataResponse> {
     return this.httpClient.get<UserdataResponse>(`${environment.base_url}/users/profile-data`);
   }
-  getMyUserPosts(userId: string): Observable<any> {
-    return this.httpClient.get<any>(`${environment.base_url}/users/${userId}/posts`);
+  getMyUserPosts(userId: string): Observable<PostDataResponse> {
+    return this.httpClient.get<PostDataResponse>(`${environment.base_url}/users/${userId}/posts`);
   }
 }
