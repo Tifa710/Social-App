@@ -240,7 +240,7 @@
                   <span class="text-gray-300">•</span>
 
                   <span class="text-xs text-gray-500">
-                    {{ Post.createdAt | date: 'short' }}
+                    {{ Post.createdAt | timeAgo }}
                   </span>
                   <span class="text-gray-300">•</span>
 
@@ -284,7 +284,7 @@
                   }
                 </button>
 
-                @if (Post.user._id === userId) {
+                @if (Post.user._id === userData._id) {
                   <button
                     type="button"
                     (click)="deletePostItem(Post.id)"
@@ -394,7 +394,7 @@
                   <span class="text-gray-300">•</span>
 
                   <span class="text-xs text-gray-500">
-                    {{ Post.createdAt | date: 'short' }}
+                    {{ Post.createdAt | timeAgo }}
                   </span>
                   <span class="text-gray-300">•</span>
 
@@ -438,7 +438,7 @@
                   }
                 </button>
 
-                @if (Post.user._id === userId) {
+                @if (Post.user._id === userData._id) {
                   <button
                     type="button"
                     (click)="deletePostItem(Post.id)"
@@ -601,7 +601,7 @@
               }
 
               <span class="mt-2 block text-[11px] text-gray-400">
-                {{ comments.createdAt | date: 'short' }}
+                {{ comments.createdAt | timeAgo }}
               </span>
             </div>
 
@@ -670,7 +670,7 @@
                       </p>
 
                       <span class="mt-1 block text-[11px] text-gray-400">
-                        {{ Reply.createdAt | date: 'short' }}
+                        {{ Reply.createdAt | timeAgo }}
                       </span>
                     </div>
                   </div>

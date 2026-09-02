@@ -1,9 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+import { BookmarkPost } from '../../Core/Models/bookmarksposts.interface';
+import { Post } from '../../Core/Models/post-data.interface';
 import { User } from '../../Core/Models/userdata.interface';
 import { MyUserService } from '../../Core/Services/myuser.service';
-import { Post } from '../../Core/Models/post-data.interface';
+import { PostService } from '../../Core/Services/post.service';
+import { getUserData } from '../../Core/utilities/getUserData';
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +16,14 @@ import { Post } from '../../Core/Models/post-data.interface';
 })
 export class ProfileComponent implements OnInit {
   private myUserService = inject(MyUserService);
+  private postService = inject(PostService);
   myUser!: User;
   postArray: Post[] = [];
+  savedPostArray: BookmarkPost[] = [];
+  userData = getUserData();
+  selectedPhoto!: File;
+  isMyPosts: boolean = true;
+  isSavedPosts: boolean = false;
   ngOnInit(): void {
     this.getMyUser();
   }
@@ -24,16 +33,45 @@ export class ProfileComponent implements OnInit {
         this.myUser = res.data.user;
         this.getMyPosts();
       },
-
     });
   }
   getMyPosts(): void {
     this.myUserService.getMyUserPosts(this.myUser._id).subscribe({
       next: (res) => {
         this.postArray = res.data.posts;
-        console.log(res);
+        this.isMyPosts = true;
+        this.isSavedPosts = false;
       },
-
+    });
+  }
+  getSavedPosts(): void {
+    this.postService.getBookMarksPosts().subscribe({
+      next: (res) => {
+        this.savedPostArray = res.data.bookmarks;
+        this.isSavedPosts = true;
+        this.isMyPosts = false;
+      },
+    });
+  }
+  userChangePhoto(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedPhoto = input.files[0];
+      this.changePhoto();
+    }
+  }
+  changePhoto(): void {
+    const formData = new FormData();
+    formData.append('photo', this.selectedPhoto);
+    this.myUserService.updateUserPhoto(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.getMyUser();
+        this.myUserService.photoUpdated.next();
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+      },
     });
   }
 }

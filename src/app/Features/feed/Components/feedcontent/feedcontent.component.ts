@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -10,10 +9,11 @@ import { CommentsService } from '../../../../Core/Services/comments.service';
 import { MyUserService } from '../../../../Core/Services/myuser.service';
 import { PostService } from '../../../../Core/Services/post.service';
 import { getUserData } from '../../../../Core/utilities/getUserData';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
 @Component({
   selector: 'app-feedcontent',
-  imports: [DatePipe, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, TimeAgoPipe],
   templateUrl: './feedcontent.component.html',
   styleUrl: './feedcontent.component.css',
 })
@@ -33,7 +33,6 @@ export class FeedcontentComponent implements OnInit {
   privacyControl = new FormControl('public');
   createSelectedFile!: File;
   postImgUrl: string | ArrayBuffer | null | undefined;
-  userId: string = '';
   postId: string = '';
   selectedFile!: File;
   selectedComment: string = '';
@@ -41,8 +40,9 @@ export class FeedcontentComponent implements OnInit {
   isCommunityPostActive: boolean = false;
   isMyPostActive: boolean = false;
   isSavedPostActive: boolean = false;
-  userData: User = getUserData();
+  userData!: User;
   ngOnInit(): void {
+    this.getMyUserData();
     this.onFeedPost();
   }
   @HostListener('document:click')
@@ -51,6 +51,13 @@ export class FeedcontentComponent implements OnInit {
 
     details.forEach((detail) => {
       detail.removeAttribute('open');
+    });
+  }
+  getMyUserData(): void {
+    this.myUserService.getMyUserData().subscribe({
+      next: (res) => {
+        this.userData = res.data.user;
+      },
     });
   }
   onFeedPost(): void {
@@ -103,7 +110,15 @@ export class FeedcontentComponent implements OnInit {
     this.postService.deletePost(id).subscribe({
       next: (res) => {
         if (res.success) {
-          this.getAllPosts();
+          if (this.isCommunityPostActive) {
+            this.getAllPosts();
+          } else if (this.isFeedPostActive) {
+            this.onFeedPost();
+          } else if (this.isSavedPostActive) {
+            this.onGetMarkedPost();
+          } else if (this.isMyPostActive) {
+            this.onGetMYPost();
+          }
         }
       },
     });
@@ -157,7 +172,15 @@ export class FeedcontentComponent implements OnInit {
         this.commentControl.reset();
         this.imgUrl = '';
         this.getPostCommentsData(this.postId);
-        this.getAllPosts();
+        if (this.isCommunityPostActive) {
+          this.getAllPosts();
+        } else if (this.isFeedPostActive) {
+          this.onFeedPost();
+        } else if (this.isSavedPostActive) {
+          this.onGetMarkedPost();
+        } else if (this.isMyPostActive) {
+          this.onGetMYPost();
+        }
       },
     });
   }
@@ -174,7 +197,15 @@ export class FeedcontentComponent implements OnInit {
         this.commentReplyControl.reset();
         this.imgUrl = '';
         this.getPostCommentsData(this.postId);
-        this.getAllPosts();
+        if (this.isCommunityPostActive) {
+          this.getAllPosts();
+        } else if (this.isFeedPostActive) {
+          this.onFeedPost();
+        } else if (this.isSavedPostActive) {
+          this.onGetMarkedPost();
+        } else if (this.isMyPostActive) {
+          this.onGetMYPost();
+        }
         this.getCommentsReplyData(commentId);
       },
     });
@@ -182,7 +213,15 @@ export class FeedcontentComponent implements OnInit {
   deleteComment(commentId: string): void {
     this.commentsService.deleteComment(commentId, this.postId).subscribe({
       next: (res) => {
-        this.getAllPosts();
+        if (this.isCommunityPostActive) {
+          this.getAllPosts();
+        } else if (this.isFeedPostActive) {
+          this.onFeedPost();
+        } else if (this.isSavedPostActive) {
+          this.onGetMarkedPost();
+        } else if (this.isMyPostActive) {
+          this.onGetMYPost();
+        }
         this.getPostCommentsData(this.postId);
       },
     });
@@ -205,12 +244,20 @@ export class FeedcontentComponent implements OnInit {
   makeMarkedAndUnMarkedPost(postId: string): void {
     this.postService.putMarkedAndUnMarkedPost(postId).subscribe({
       next: (res) => {
-        const post = this.postArray.find((post) => post.id == postId);
-        const savedPost = this.bookMarkedPostArray.find((post) => post.id == postId);
+        if (this.isSavedPostActive) {
+          const savedPost = this.bookMarkedPostArray.find((post) => post.id === postId);
+
+          if (savedPost) {
+            savedPost.bookmarked = res.data.bookmarked;
+          }
+
+          return;
+        }
+
+        const post = this.postArray.find((post) => post.id === postId);
+
         if (post) {
           post.bookmarked = res.data.bookmarked;
-        } else if (savedPost) {
-          savedPost.bookmarked = res.data.bookmarked;
         }
       },
     });
@@ -248,7 +295,15 @@ export class FeedcontentComponent implements OnInit {
         if (res.success) {
           formElement.reset();
           this.postImgUrl = '';
-          this.getAllPosts();
+          if (this.isCommunityPostActive) {
+            this.getAllPosts();
+          } else if (this.isFeedPostActive) {
+            this.onFeedPost();
+          } else if (this.isSavedPostActive) {
+            this.onGetMarkedPost();
+          } else if (this.isMyPostActive) {
+            this.onGetMYPost();
+          }
         }
       },
     });

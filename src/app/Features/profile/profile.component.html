@@ -6,12 +6,22 @@
       ></div>
       <div class="relative px-5 pb-6 sm:px-8">
         <div class="-mt-16 flex items-end justify-between">
-          <div class="rounded-full bg-white p-1.5 shadow-lg">
+          <div class="relative rounded-full bg-white p-1.5 shadow-lg">
             <img
               [src]="myUser.photo"
               [alt]="myUser.name"
               class="h-28 w-28 rounded-full border-4 border-white object-cover sm:h-32 sm:w-32"
             />
+
+            <button
+              type="button"
+              (click)="photoInput.click()"
+              class="absolute cursor-pointer bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-main-color text-white shadow-md transition hover:scale-110 hover:opacity-90"
+              title="Change profile photo"
+            >
+              <i class="fa-solid fa-camera text-sm"></i>
+            </button>
+            <input type="file" class="hidden" #photoInput (change)="userChangePhoto($event)" />
           </div>
         </div>
         <div class="mt-4">
@@ -107,79 +117,151 @@
       <div class="lg:col-span-12">
         <div class="mb-5 flex rounded-2xl border border-gray-100 bg-white p-1.5 shadow-sm">
           <button
+            (click)="getMyPosts()"
             type="button"
-            class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-main-color px-4 py-3 text-sm font-semibold text-white shadow-sm transition"
+            [class]="{
+              'bg-main-color': isMyPosts,
+              'text-white': isMyPosts,
+            }"
+            class="flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-500 transition hover:bg-gray-50 hover:text-main-color"
           >
             <i class="fa-solid fa-file-lines"></i>
             My Posts
           </button>
           <button
+            (click)="getSavedPosts()"
             type="button"
+            [class]="{
+              'bg-main-color': isSavedPosts,
+              'text-white': isSavedPosts,
+            }"
             class="flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-gray-500 transition hover:bg-gray-50 hover:text-main-color"
           >
             <i class="fa-solid fa-bookmark"></i>
             Saved Posts
           </button>
         </div>
-
-        @for (Post of postArray; track Post._id) {
-          <article
-            class="overflow-hidden mt-3 rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
-          >
-            <div class="flex items-start justify-between p-5">
-              <div class="flex gap-3">
-                <img
-                  [src]="Post.user.photo"
-                  [alt]="Post.user.name"
-                  class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/10"
-                />
-                <div>
-                  <div class="flex items-center gap-2">
-                    <h3 class="text-sm font-bold text-gray-900">{{ Post.user.name }}</h3>
+        @if (isMyPosts) {
+          @for (Post of postArray; track Post._id) {
+            <article
+              class="overflow-hidden mt-3 rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
+            >
+              <div class="flex items-start justify-between p-5">
+                <div class="flex gap-3">
+                  <img
+                    [src]="Post.user.photo"
+                    [alt]="Post.user.name"
+                    class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/10"
+                  />
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-sm font-bold text-gray-900">{{ Post.user.name }}</h3>
+                    </div>
+                    <p class="text-xs text-gray-500">@{{ Post.user.name }}</p>
                   </div>
-                  <p class="text-xs text-gray-500">@{{ Post.user.name }}</p>
                 </div>
               </div>
-            </div>
-            @if (Post.body) {
+              @if (Post.body) {
+                <div class="px-5 pb-4">
+                  <p class="text-sm leading-7 text-gray-700">
+                    {{ Post.body }}
+                  </p>
+                </div>
+              }
+              @if (Post.image) {
+                <div class="overflow-hidden bg-gray-100">
+                  <img
+                    [src]="Post.image"
+                    alt="Post image"
+                    class="max-h-[500px] w-full object-contain transition duration-500 hover:scale-[1.02]"
+                  />
+                </div>
+              }
+              <div class="flex items-center justify-between px-5 py-3">
+                <div class="flex items-center gap-1">
+                  <div
+                    class="flex h-6 w-6 items-center justify-center rounded-full bg-main-color text-[10px] text-white"
+                  >
+                    <i class="fa-solid fa-heart"></i>
+                  </div>
+                  <span class="ml-1 text-xs font-medium text-gray-500">
+                    {{ Post.likesCount }} Likes
+                  </span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span> {{ Post.commentsCount }} Comments </span>
+                  <span> {{ Post.sharesCount }} Shares </span>
+                </div>
+              </div>
               <div class="px-5 pb-4">
-                <p class="text-sm leading-7 text-gray-700">
-                  {{ Post.body }}
+                <p class="flex justify-end items-center gap-1 text-xs text-gray-400">
+                  <i class="fa-regular fa-clock"></i>
+                  {{ Post.createdAt | date: 'short' }}
                 </p>
               </div>
-            }
-            @if (Post.image) {
-              <div class="overflow-hidden bg-gray-100">
-                <img
-                  [src]="Post.image"
-                  alt="Post image"
-                  class="max-h-[500px] w-full object-contain transition duration-500 hover:scale-[1.02]"
-                />
-              </div>
-            }
-            <div class="flex items-center justify-between px-5 py-3">
-              <div class="flex items-center gap-1">
-                <div
-                  class="flex h-6 w-6 items-center justify-center rounded-full bg-main-color text-[10px] text-white"
-                >
-                  <i class="fa-solid fa-heart"></i>
+            </article>
+          }
+        }
+        @if (isSavedPosts) {
+          @for (Post of savedPostArray; track Post._id) {
+            <article
+              class="overflow-hidden mt-3 rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
+            >
+              <div class="flex items-start justify-between p-5">
+                <div class="flex gap-3">
+                  <img
+                    [src]="Post.user.photo"
+                    [alt]="Post.user.name"
+                    class="h-11 w-11 rounded-full object-cover ring-2 ring-main-color/10"
+                  />
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-sm font-bold text-gray-900">{{ Post.user.name }}</h3>
+                    </div>
+                    <p class="text-xs text-gray-500">@{{ Post.user.name }}</p>
+                  </div>
                 </div>
-                <span class="ml-1 text-xs font-medium text-gray-500">
-                  {{ Post.likesCount }} Likes
-                </span>
               </div>
-              <div class="flex items-center gap-4 text-xs text-gray-500">
-                <span> {{ Post.commentsCount }} Comments </span>
-                <span> {{ Post.sharesCount }} Shares </span>
+              @if (Post.body) {
+                <div class="px-5 pb-4">
+                  <p class="text-sm leading-7 text-gray-700">
+                    {{ Post.body }}
+                  </p>
+                </div>
+              }
+              @if (Post.image) {
+                <div class="overflow-hidden bg-gray-100">
+                  <img
+                    [src]="Post.image"
+                    alt="Post image"
+                    class="max-h-[500px] w-full object-contain transition duration-500 hover:scale-[1.02]"
+                  />
+                </div>
+              }
+              <div class="flex items-center justify-between px-5 py-3">
+                <div class="flex items-center gap-1">
+                  <div
+                    class="flex h-6 w-6 items-center justify-center rounded-full bg-main-color text-[10px] text-white"
+                  >
+                    <i class="fa-solid fa-heart"></i>
+                  </div>
+                  <span class="ml-1 text-xs font-medium text-gray-500">
+                    {{ Post.likesCount }} Likes
+                  </span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span> {{ Post.commentsCount }} Comments </span>
+                  <span> {{ Post.sharesCount }} Shares </span>
+                </div>
               </div>
-            </div>
-            <div class="px-5 pb-4">
-              <p class="flex justify-end items-center gap-1 text-xs text-gray-400">
-                <i class="fa-regular fa-clock"></i>
-                {{ Post.createdAt | date: 'short' }}
-              </p>
-            </div>
-          </article>
+              <div class="px-5 pb-4">
+                <p class="flex justify-end items-center gap-1 text-xs text-gray-400">
+                  <i class="fa-regular fa-clock"></i>
+                  {{ Post.createdAt | date: 'short' }}
+                </p>
+              </div>
+            </article>
+          }
         }
       </div>
     </div>
