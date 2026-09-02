@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { UserdataResponse } from '../Models/userdata.interface';
 import { PostDataResponse } from '../Models/post-data.interface';
+import { UpdatePhotoData } from '../Models/update-photo.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,10 @@ export class MyUserService {
   getMyUserPosts(userId: string): Observable<PostDataResponse> {
     return this.httpClient.get<PostDataResponse>(`${environment.base_url}/users/${userId}/posts`);
   }
-  updateUserPhoto(updatedPhoto: FormData): Observable<any> {
-    return this.httpClient.put<any>(`${environment.base_url}/users/upload-photo`, updatedPhoto);
+  updateUserPhoto(updatedPhoto: FormData): Observable<UpdatePhotoData> {
+    return this.httpClient.put<UpdatePhotoData>(
+      `${environment.base_url}/users/upload-photo`,
+      updatedPhoto,
+    );
   }
 }

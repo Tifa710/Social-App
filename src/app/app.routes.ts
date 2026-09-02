@@ -3,7 +3,6 @@ import { authGuard } from './Core/Auth/Guards/auth-guard';
 import { guestGuard } from './Core/Auth/Guards/guest-guard';
 import { ChangePasswordComponent } from './Features/change-password/change-password.component';
 import { FeedComponent } from './Features/feed/feed.component';
-import { ForgetPasswordComponent } from './Features/forget-password/forget-password.component';
 import { LoginComponent } from './Features/login/login.component';
 import { NotfoundComponent } from './Features/notfound/notfound.component';
 import { NotificationComponent } from './Features/notification/notification.component';
@@ -30,10 +29,6 @@ export const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
-      },
-      {
-        path: 'forgetPassword',
-        component: ForgetPasswordComponent,
       },
     ],
   },

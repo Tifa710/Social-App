@@ -69,9 +69,6 @@ export class ProfileComponent implements OnInit {
         this.getMyUser();
         this.myUserService.photoUpdated.next();
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-      },
     });
   }
 }
