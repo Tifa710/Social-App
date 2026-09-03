@@ -19,7 +19,7 @@ export class PostService {
   }
   getFeedPosts(): Observable<PostDataResponse> {
     return this.httpClient.get<PostDataResponse>(
-      `${environment.base_url}/posts/feed?only=following&limit=10`,
+      `${environment.base_url}/posts/feed?only=following&limit=20`,
     );
   }
   getBookMarksPosts(): Observable<BookMarksPostsResponse> {
