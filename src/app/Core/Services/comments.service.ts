@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CommentsResponse } from '../Models/comments.interface';
-import { CommentReplayResponse } from '../Models/commentreplay.interface';
+import { CommentsResponse } from '../Models/comments/comments.interface';
+import { CommentReplayResponse } from '../Models/comments/commentreplay.interface';
 
 @Injectable({
   providedIn: 'root',

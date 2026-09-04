@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { BookmarkPost } from '../../Core/Models/bookmarksposts.interface';
-import { Post } from '../../Core/Models/post-data.interface';
-import { User } from '../../Core/Models/userdata.interface';
+import { BookmarkPost } from '../../Core/Models/bookMark/bookmarksposts.interface';
+import { Post } from '../../Core/Models/Posts/post-data.interface';
+import { User } from '../../Core/Models/User/userdata.interface';
 import { MyUserService } from '../../Core/Services/myuser.service';
 import { PostService } from '../../Core/Services/post.service';
 import { getUserData } from '../../Core/utilities/getUserData';

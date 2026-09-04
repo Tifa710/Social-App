@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PostDataResponse } from '../Models/post-data.interface';
-import { PostMutation, PostMutationResponse } from '../Models/post-mutation.interface';
-import { likePostResponse } from '../Models/likepost.interface';
-import { BookMarkedPostResponse } from '../Models/bookmarkedpost.interface';
-import { BookMarksPostsResponse } from '../Models/bookmarksposts.interface';
+import { PostDataResponse } from '../Models/Posts/post-data.interface';
+import { PostMutation, PostMutationResponse } from '../Models/Posts/post-mutation.interface';
+import { likePostResponse } from '../Models/Posts/likepost.interface';
+import { BookMarkedPostResponse } from '../Models/bookMark/bookmarkedpost.interface';
+import { BookMarksPostsResponse } from '../Models/bookMark/bookmarksposts.interface';
 
 @Injectable({
   providedIn: 'root',

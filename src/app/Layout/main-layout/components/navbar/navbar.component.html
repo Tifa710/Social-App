@@ -37,11 +37,13 @@
 
         <span class="hidden md:inline"> Notifications </span>
 
-        <span
-          class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-main-color px-1 text-[9px] font-bold text-white"
-        >
-          3
-        </span>
+        @if (unReadNotificationCount > 0) {
+          <span
+            class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-main-color px-1 text-[9px] font-bold text-white"
+          >
+            {{ unReadNotificationCount }}
+          </span>
+        }
       </a>
     </div>
 

@@ -1,696 +1,332 @@
-<div class="min-h-screen bg-[#f7f7fb] px-4 py-8 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-5xl">
-    <!-- ========================================= -->
-    <!-- HEADER -->
-    <!-- ========================================= -->
-
-    <div class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <div class="mb-2 flex items-center gap-2">
-          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-main-color/10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.8"
-              stroke="currentColor"
-              class="h-5 w-5 text-main-color"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022 23.848 23.848 0 0 0 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-              />
-            </svg>
-          </div>
-
-          <span class="text-sm font-semibold text-main-color"> Activity Center </span>
-        </div>
-
-        <h1 class="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl">Notifications</h1>
-
-        <p class="mt-2 text-sm text-gray-500">Keep up with the latest activity on your posts.</p>
-      </div>
-
-      <!-- Unread Counter -->
-
-      <div
-        class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm"
-      >
-        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-main-color/10">
-          <span class="h-2.5 w-2.5 rounded-full bg-main-color"></span>
-        </div>
-
+@if (notificationsArray.length > 0) {
+  <div class="min-h-screen bg-white px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl">
+      <div class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p class="text-xs font-medium text-gray-400">Unread</p>
+          <div class="mb-2 flex items-center gap-2">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-main-color/10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="h-5 w-5 text-main-color"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022 23.848 23.848 0 0 0 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                />
+              </svg>
+            </div>
 
-          <p class="text-lg font-bold text-gray-900">3 notifications</p>
+            <span class="text-sm font-semibold text-main-color"> Activity Center </span>
+          </div>
+
+          <h1 class="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl">
+            Notifications
+          </h1>
+
+          <p class="mt-2 text-sm text-gray-500">Keep up with the latest activity on your posts.</p>
+        </div>
+
+        <!-- Unread Counter -->
+
+        <div
+          class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm"
+        >
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-main-color/10">
+            <span class="h-2.5 w-2.5 rounded-full bg-main-color"></span>
+          </div>
+
+          <div>
+            <p class="text-xs font-medium text-gray-400">Unread</p>
+
+            <p class="text-lg font-bold text-gray-900">{{ unReadNotificationCount }}</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- ========================================= -->
-    <!-- FILTER BAR -->
-    <!-- ========================================= -->
+      <div
+        class="mb-6 flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div class="flex w-full rounded-xl bg-gray-100 p-1 sm:w-auto">
+          <button
+            class="flex-1 rounded-lg bg-white px-6 py-2.5 text-sm font-bold text-main-color shadow-sm transition sm:flex-none"
+          >
+            All
+          </button>
 
-    <div
-      class="mb-6 flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm sm:flex-row sm:items-center sm:justify-between"
-    >
-      <!-- Tabs -->
+          <button
+            class="flex-1 rounded-lg px-6 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-white hover:text-gray-900 sm:flex-none"
+          >
+            Unread
+          </button>
+        </div>
 
-      <div class="flex w-full rounded-xl bg-gray-100 p-1 sm:w-auto">
-        <!-- Active -->
+        <!-- Mark All -->
 
         <button
-          class="flex-1 rounded-lg bg-white px-6 py-2.5 text-sm font-bold text-main-color shadow-sm transition sm:flex-none"
+          class="group flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-main-color"
         >
-          All
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="h-4 w-4 transition group-hover:scale-110"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+
+          Mark all as read
         </button>
-
-        <button
-          class="flex-1 rounded-lg px-6 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-white hover:text-gray-900 sm:flex-none"
-        >
-          Unread
-        </button>
-      </div>
-
-      <!-- Mark All -->
-
-      <button
-        class="group flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-main-color"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="h-4 w-4 transition group-hover:scale-110"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-        </svg>
-
-        Mark all as read
-      </button>
-    </div>
-
-    <!-- ========================================= -->
-    <!-- NOTIFICATIONS -->
-    <!-- ========================================= -->
-
-    <div class="space-y-4">
-      <!-- ========================================= -->
-      <!-- LIKE - UNREAD -->
-      <!-- ========================================= -->
-
-      <div
-        class="group relative overflow-hidden rounded-2xl border border-main-color/10 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-main-color/20 hover:shadow-lg"
-      >
-        <!-- Unread line -->
-
-        <div class="absolute left-0 top-0 h-full w-1 bg-main-color"></div>
-
-        <div class="flex gap-4">
-          <!-- Avatar -->
-
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=12"
-              class="h-14 w-14 rounded-full object-cover ring-4 ring-red-50"
-              alt="Ahmed Mohamed"
-            />
-
-            <!-- TYPE ICON -->
-
-            <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-red-500 text-white shadow-md ring-2 ring-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  d="M12 21s-7.5-4.35-10-9.2C-.5 6.9 2.3 3 6.3 3c2.1 0 3.8 1.1 5.7 3.1C13.9 4.1 15.6 3 17.7 3c4 0 6.8 3.9 4.3 8.8C19.5 16.65 12 21 12 21Z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <!-- CONTENT -->
-
-          <div class="min-w-0 flex-1">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-bold text-gray-900">Ahmed Mohamed</h3>
-
-                  <span
-                    class="rounded-full bg-red-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-red-500"
-                  >
-                    Like
-                  </span>
-
-                  <span class="h-2 w-2 rounded-full bg-main-color"></span>
-                </div>
-
-                <p class="mt-1 text-sm text-gray-600">liked your post</p>
-
-                <p class="mt-1 text-xs font-medium text-gray-400">2 minutes ago</p>
-              </div>
-
-              <!-- STATUS -->
-
-              <div class="flex items-center gap-2">
-                <span
-                  class="flex items-center gap-1.5 rounded-full bg-main-color/10 px-3 py-1.5 text-xs font-semibold text-main-color"
-                >
-                  <span class="h-1.5 w-1.5 rounded-full bg-main-color"></span>
-
-                  Unread
-                </span>
-              </div>
-            </div>
-
-            <!-- POST PREVIEW -->
-
-            <div class="mt-4 rounded-xl border border-gray-100 bg-gray-50 p-3">
-              <div class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-lg bg-main-color/10"></div>
-
-                <div class="min-w-0">
-                  <p class="truncate text-xs font-semibold text-gray-700">Your latest post</p>
-
-                  <p class="truncate text-xs text-gray-400">
-                    Check out what you shared recently...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- ACTION -->
-
-            <div class="mt-4">
-              <button
-                class="inline-flex items-center gap-2 rounded-xl bg-main-color px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:scale-[1.02] hover:shadow-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-4 w-4"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-
-                Mark as read
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- ========================================= -->
-      <!-- COMMENT - UNREAD -->
+      <!-- NOTIFICATIONS -->
       <!-- ========================================= -->
 
-      <div
-        class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-      >
-        <div class="absolute left-0 top-0 h-full w-1 bg-blue-500"></div>
+      <div class="space-y-4">
+        <!-- ========================================= -->
+        <!-- LIKE - UNREAD -->
+        <!-- ========================================= -->
 
-        <div class="flex gap-4">
-          <!-- Avatar -->
-
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=32"
-              class="h-14 w-14 rounded-full object-cover ring-4 ring-blue-50"
-              alt="Sara Ali"
-            />
-
-            <!-- COMMENT ICON -->
-
+        @for (Notification of notificationsArray; track Notification._id) {
+          @if (!Notification.isRead) {
             <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-white shadow-md ring-2 ring-white"
+              class="group relative overflow-hidden rounded-2xl border border-main-color/10 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-main-color/20 hover:shadow-lg"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7.5 8.25h9m-9 3h5.25m-8.25 8.25 2.25-3.75H18a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18 4.5H6a2.25 2.25 0 0 0-2.25 2.25v6.75A2.25 2.25 0 0 0 6 15.75h.75v3.75Z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <!-- CONTENT -->
-
-          <div class="min-w-0 flex-1">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-bold text-gray-900">Sara Ali</h3>
-
-                  <span
-                    class="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-600"
-                  >
-                    Comment
-                  </span>
-
-                  <span class="h-2 w-2 rounded-full bg-main-color"></span>
-                </div>
-
-                <p class="mt-1 text-sm text-gray-600">commented on your post</p>
-
-                <p class="mt-1 text-xs font-medium text-gray-400">10 minutes ago</p>
-              </div>
-
-              <span
-                class="flex w-fit items-center gap-1.5 rounded-full bg-main-color/10 px-3 py-1.5 text-xs font-semibold text-main-color"
-              >
-                <span class="h-1.5 w-1.5 rounded-full bg-main-color"></span>
-
-                Unread
-              </span>
-            </div>
-
-            <!-- COMMENT PREVIEW -->
-
-            <div class="mt-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4">
-              <div class="flex gap-3">
-                <div
-                  class="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500 text-white"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="h-4 w-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7.5 8.25h9m-9 3h5.25m-8.25 8.25 2.25-3.75H18a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18 4.5H6a2.25 2.25 0 0 0-2.25 2.25v6.75A2.25 2.25 0 0 0 6 15.75h.75v3.75Z"
+              @if (Notification.type == 'like_post') {
+                <div class="absolute left-0 top-0 h-full w-1 bg-red-500"></div>
+              } @else if (Notification.type == 'comment_post') {
+                <div class="absolute left-0 top-0 h-full w-1 bg-blue-500"></div>
+              } @else if (Notification.type == 'share_post') {
+                <div class="absolute left-0 top-0 h-full w-1 bg-emerald-500"></div>
+              } @else if (Notification.type == 'follow_user') {
+                <div class="absolute left-0 top-0 h-full w-1 bg-main-color"></div>
+              }
+              <div class="flex gap-4">
+                <div class="relative shrink-0">
+                  @if (Notification.type == 'like_post') {
+                    <img
+                      [src]="Notification.actor.photo"
+                      class="h-14 w-14 rounded-full object-cover ring-4 ring-red-50"
+                      [alt]="Notification.actor.name"
                     />
-                  </svg>
-                </div>
-
-                <p class="text-sm leading-6 text-gray-600">
-                  "This is really amazing! I love what you shared."
-                </p>
-              </div>
-            </div>
-
-            <!-- ACTION -->
-
-            <div class="mt-4">
-              <button
-                class="inline-flex items-center gap-2 rounded-xl bg-blue-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:scale-[1.02] hover:bg-blue-600 hover:shadow-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-4 w-4"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-
-                Mark as read
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================= -->
-      <!-- RESHARE - UNREAD -->
-      <!-- ========================================= -->
-
-      <div
-        class="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-      >
-        <div class="absolute left-0 top-0 h-full w-1 bg-emerald-500"></div>
-
-        <div class="flex gap-4">
-          <!-- Avatar -->
-
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=45"
-              class="h-14 w-14 rounded-full object-cover ring-4 ring-emerald-50"
-              alt="Omar Hassan"
-            />
-
-            <!-- RESHARE ICON -->
-
-            <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-white shadow-md ring-2 ring-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7.5 7.5h9.75m0 0-3-3m3 3-3 3M16.5 16.5H6.75m0 0 3-3m-3 3 3 3"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <!-- CONTENT -->
-
-          <div class="min-w-0 flex-1">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-bold text-gray-900">Omar Hassan</h3>
-
-                  <span
-                    class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-600"
-                  >
-                    Reshare
-                  </span>
-
-                  <span class="h-2 w-2 rounded-full bg-main-color"></span>
-                </div>
-
-                <p class="mt-1 text-sm text-gray-600">reshared your post</p>
-
-                <p class="mt-1 text-xs font-medium text-gray-400">25 minutes ago</p>
-              </div>
-
-              <span
-                class="flex w-fit items-center gap-1.5 rounded-full bg-main-color/10 px-3 py-1.5 text-xs font-semibold text-main-color"
-              >
-                <span class="h-1.5 w-1.5 rounded-full bg-main-color"></span>
-
-                Unread
-              </span>
-            </div>
-
-            <!-- RESHARE PREVIEW -->
-
-            <div class="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-4">
-              <div class="flex items-center gap-3">
-                <div
-                  class="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500 text-white"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="h-5 w-5"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7.5 7.5h9.75m0 0-3-3m3 3-3 3M16.5 16.5H6.75m0 0 3-3m-3 3 3 3"
+                  } @else if (Notification.type == 'comment_post') {
+                    <img
+                      [src]="Notification.actor.photo"
+                      class="h-14 w-14 rounded-full object-cover ring-4 ring-blue-50"
+                      [alt]="Notification.actor.name"
                     />
-                  </svg>
+                  } @else if (Notification.type == 'share_post') {
+                    <img
+                      [src]="Notification.actor.photo"
+                      class="h-14 w-14 rounded-full object-cover ring-4 ring-emerald-50"
+                      [alt]="Notification.actor.name"
+                    />
+                  } @else if (Notification.type == 'follow_user') {
+                    <img
+                      [src]="Notification.actor.photo"
+                      class="h-14 w-14 rounded-full object-cover ring-4 ring-main-color/10"
+                      [alt]="Notification.actor.name"
+                    />
+                  }
+                  @if (Notification.type == 'like_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-red-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-heart" style="color: #ff4500"></i>
+                    </div>
+                  } @else if (Notification.type == 'comment_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-comments" style="color: rgb(0, 142, 255)"></i>
+                    </div>
+                  } @else if (Notification.type == 'share_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-share" style="color: rgb(3, 167, 115)"></i>
+                    </div>
+                  } @else if (Notification.type == 'follow_user') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-main-color/20 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-user-plus" style="color: rgb(119, 70, 255)"></i>
+                    </div>
+                  }
                 </div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h3 class="font-bold text-gray-900">{{ Notification.actor.name }}</h3>
 
-                <div>
-                  <p class="text-xs font-bold text-emerald-700">Your post was reshared</p>
+                        @if (Notification.type == 'like_post') {
+                          <span
+                            class="rounded-full bg-red-50 px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-red-500"
+                          >
+                            Like
+                          </span>
+                        } @else if (Notification.type == 'comment_post') {
+                          <span
+                            class="rounded-full bg-blue-50 px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-blue-500"
+                          >
+                            comment
+                          </span>
+                        } @else if (Notification.type == 'share_post') {
+                          <span
+                            class="rounded-full bg-emerald-50 px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-emerald-500"
+                          >
+                            share
+                          </span>
+                        } @else if (Notification.type == 'follow_user') {
+                          <span
+                            class="rounded-full bg-main-color/10 px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-main-color"
+                            >Follow
+                          </span>
+                        }
+                      </div>
+                      @if (Notification.type == 'like_post') {
+                        <p class="mt-1 text-sm text-gray-600">liked your post</p>
+                      } @else if (Notification.type == 'comment_post') {
+                        <p class="mt-1 text-sm text-gray-600">Comment on your post</p>
+                      } @else if (Notification.type == 'share_post') {
+                        <p class="mt-1 text-sm text-gray-600">Share your post</p>
+                      } @else if (Notification.type == 'follow_user') {
+                        <p class="mt-1 text-sm text-gray-600">
+                          {{ Notification.actor.name }} Started Following You
+                        </p>
+                      }
+                      <p class="mt-1 text-xs font-medium text-gray-400">
+                        {{ Notification.createdAt | timeAgo }}
+                      </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      @if (!Notification.isRead) {
+                        <span
+                          class="flex items-center gap-1.5 rounded-full bg-main-color/10 px-3 py-1.5 text-xs font-semibold text-main-color"
+                        >
+                          <span class="h-1.5 w-1.5 rounded-full bg-main-color"></span>
+                          Unread
+                        </span>
+                      }
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <button
+                      (click)="makeNotificationRead(Notification._id)"
+                      class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-main-color px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:scale-[1.02] hover:shadow-md"
+                    >
+                      <i class="fa-solid fa-check" style="color: rgb(255, 255, 255)"></i>
 
-                  <p class="mt-0.5 text-xs text-gray-500">Your content is reaching more people.</p>
+                      Mark as read
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- ACTION -->
-
-            <div class="mt-4">
-              <button
-                class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:scale-[1.02] hover:bg-emerald-600 hover:shadow-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-4 w-4"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-
-                Mark as read
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================= -->
-      <!-- LIKE - READ -->
-      <!-- ========================================= -->
-
-      <div
-        class="group rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition duration-300 hover:border-gray-200 hover:shadow-md"
-      >
-        <div class="flex gap-4">
-          <!-- Avatar -->
-
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=22"
-              class="h-14 w-14 rounded-full object-cover grayscale-[15%]"
-              alt="Mariam Ahmed"
-            />
-
-            <!-- ICON -->
-
+          } @else if (Notification.isRead) {
             <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-red-400 text-white shadow-md ring-2 ring-white"
+              class="group rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition duration-300 hover:border-gray-200 hover:shadow-md"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  d="M12 21s-7.5-4.35-10-9.2C-.5 6.9 2.3 3 6.3 3c2.1 0 3.8 1.1 5.7 3.1C13.9 4.1 15.6 3 17.7 3c4 0 6.8 3.9 4.3 8.8C19.5 16.65 12 21 12 21Z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <!-- CONTENT -->
-
-          <div class="min-w-0 flex-1">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-semibold text-gray-800">Mariam Ahmed</h3>
-
-                  <span
-                    class="rounded-full bg-gray-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500"
-                  >
-                    Like
-                  </span>
+              <div class="flex gap-4">
+                <div class="relative shrink-0">
+                  <img
+                    [src]="Notification.actor.photo"
+                    class="h-14 w-14 rounded-full object-cover grayscale-15"
+                    [alt]="Notification.actor.name"
+                  />
+                  @if (Notification.type == 'like_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-red-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-heart" style="color: #ff4500"></i>
+                    </div>
+                  } @else if (Notification.type == 'comment_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-comments" style="color: rgb(0, 142, 255)"></i>
+                    </div>
+                  } @else if (Notification.type == 'share_post') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-200 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-share" style="color: rgb(3, 167, 115)"></i>
+                    </div>
+                  } @else if (Notification.type == 'follow_user') {
+                    <div
+                      class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-main-color/20 text-white shadow-md ring-2 ring-white"
+                    >
+                      <i class="fa-solid fa-user-plus" style="color: rgb(119, 70, 255)"></i>
+                    </div>
+                  }
                 </div>
-
-                <p class="mt-1 text-sm text-gray-500">liked your post</p>
-
-                <p class="mt-1 text-xs text-gray-400">1 hour ago</p>
-              </div>
-
-              <!-- READ STATUS -->
-
-              <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400"
-                title="Read"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-5 w-5"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================= -->
-      <!-- COMMENT - READ -->
-      <!-- ========================================= -->
-
-      <div
-        class="group rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition duration-300 hover:border-gray-200 hover:shadow-md"
-      >
-        <div class="flex gap-4">
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=16"
-              class="h-14 w-14 rounded-full object-cover"
-              alt="Youssef Mohamed"
-            />
-
-            <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-400 text-white shadow-md ring-2 ring-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7.5 8.25h9m-9 3h5.25m-8.25 8.25 2.25-3.75H18a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18 4.5H6a2.25 2.25 0 0 0-2.25 2.25v6.75A2.25 2.25 0 0 0 6 15.75h.75v3.75Z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div class="min-w-0 flex-1">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-semibold text-gray-800">Youssef Mohamed</h3>
-
-                  <span
-                    class="rounded-full bg-gray-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500"
-                  >
-                    Comment
-                  </span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h3 class="font-semibold text-gray-800">{{ Notification.actor.name }}</h3>
+                        <span
+                          class="rounded-full bg-gray-100 px-2.5 py-1 text-2xs font-bold uppercase tracking-wide text-gray-500"
+                        >
+                          @if (Notification.type == 'like_post') {
+                            Like
+                          } @else if (Notification.type == 'comment_post') {
+                            Comment
+                          } @else if (Notification.type == 'share_post') {
+                            Share
+                          } @else if (Notification.type == 'follow_user') {
+                            Follow
+                          }
+                        </span>
+                      </div>
+                      @if (Notification.type == 'like_post') {
+                        <p class="mt-1 text-sm text-gray-500">liked your post</p>
+                      } @else if (Notification.type == 'comment_post') {
+                        <p class="mt-1 text-sm text-gray-500">Comment on your post</p>
+                      } @else if (Notification.type == 'share_post') {
+                        <p class="mt-1 text-sm text-gray-500">Share your post</p>
+                      } @else if (Notification.type == 'follow_user') {
+                        <p class="mt-1 text-sm text-gray-500">Follow your post</p>
+                      }
+                      <p class="mt-1 text-xs text-gray-400">
+                        {{ Notification.createdAt | timeAgo }}
+                      </p>
+                    </div>
+                    <div
+                      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400"
+                      title="Read"
+                    >
+                      <i class="fa-solid fa-check-double" style="color: rgb(119, 70, 255)"></i>
+                    </div>
+                  </div>
                 </div>
-
-                <p class="mt-1 text-sm text-gray-500">commented on your post</p>
-
-                <div class="mt-3 rounded-xl bg-gray-50 px-4 py-3">
-                  <p class="text-sm text-gray-500">"Great post! Really useful information."</p>
-                </div>
-
-                <p class="mt-2 text-xs text-gray-400">2 hours ago</p>
-              </div>
-
-              <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400"
-                title="Read"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-5 w-5"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================= -->
-      <!-- RESHARE - READ -->
-      <!-- ========================================= -->
-
-      <div
-        class="group rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition duration-300 hover:border-gray-200 hover:shadow-md"
-      >
-        <div class="flex gap-4">
-          <div class="relative shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?img=51"
-              class="h-14 w-14 rounded-full object-cover"
-              alt="Mostafa Ali"
-            />
-
-            <div
-              class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-400 text-white shadow-md ring-2 ring-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7.5 7.5h9.75m0 0-3-3m3 3-3 3M16.5 16.5H6.75m0 0 3-3m-3 3 3 3"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div class="min-w-0 flex-1">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-semibold text-gray-800">Mostafa Ali</h3>
-
-                  <span
-                    class="rounded-full bg-gray-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500"
-                  >
-                    Reshare
-                  </span>
-                </div>
-
-                <p class="mt-1 text-sm text-gray-500">reshared your post</p>
-
-                <p class="mt-1 text-xs text-gray-400">Yesterday</p>
-              </div>
-
-              <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400"
-                title="Read"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="h-5 w-5"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
+          }
+        }
       </div>
     </div>
   </div>
-</div>
+} @else if (notificationsArray.length == 0) {
+  <div class="flex min-h-[60vh] items-center justify-center px-4">
+    <div class="text-center">
+      <div
+        class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#f5e8ff]"
+      >
+        <i class="fa-regular fa-bell text-3xl text-main-color"></i>
+      </div>
+
+      <h2 class="text-xl font-bold text-gray-900">No notifications</h2>
+
+      <p class="mt-2 text-sm text-gray-500">You're all caught up for now.</p>
+    </div>
+  </div>
+}

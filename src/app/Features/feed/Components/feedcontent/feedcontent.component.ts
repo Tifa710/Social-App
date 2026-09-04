@@ -1,10 +1,10 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { BookmarkPost } from '../../../../Core/Models/bookmarksposts.interface';
-import { Reply } from '../../../../Core/Models/commentreplay.interface';
-import { Comment } from '../../../../Core/Models/comments.interface';
-import { Post, User } from '../../../../Core/Models/post-data.interface';
+import { BookmarkPost } from '../../../../Core/Models/bookMark/bookmarksposts.interface';
+import { Reply } from '../../../../Core/Models/comments/commentreplay.interface';
+import { Comment } from '../../../../Core/Models/comments/comments.interface';
+import { Post, User } from '../../../../Core/Models/Posts/post-data.interface';
 import { CommentsService } from '../../../../Core/Services/comments.service';
 import { MyUserService } from '../../../../Core/Services/myuser.service';
 import { PostService } from '../../../../Core/Services/post.service';

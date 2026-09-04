@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FollowService } from '../../../../Core/Services/follow.service';
-import { Suggestion } from '../../../../Core/Models/following-suggestion.interface';
+import { Suggestion } from '../../../../Core/Models/Follow/following-suggestion.interface';
 
 @Component({
   selector: 'app-suggested-friends',

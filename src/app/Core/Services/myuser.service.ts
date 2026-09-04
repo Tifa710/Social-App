@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { UserdataResponse } from '../Models/userdata.interface';
-import { PostDataResponse } from '../Models/post-data.interface';
-import { UpdatePhotoData } from '../Models/update-photo.interface';
+import { UserdataResponse } from '../Models/User/userdata.interface';
+import { PostDataResponse } from '../Models/Posts/post-data.interface';
+import { UpdatePhotoData } from '../Models/User/update-photo.interface';
 
 @Injectable({
   providedIn: 'root',
