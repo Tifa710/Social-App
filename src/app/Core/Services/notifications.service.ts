@@ -28,4 +28,10 @@ export class NotificationsService {
       {},
     );
   }
+  markAllAsRead(notificationId: string): Observable<NotificationReadResponse> {
+    return this.httpClient.patch<NotificationReadResponse>(
+      `${environment.base_url}/notifications/${notificationId}/read`,
+      {},
+    );
+  }
 }
