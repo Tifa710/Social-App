@@ -883,10 +883,10 @@
         }
       </div>
 
-      <div class="border-t border-gray-100 bg-gray-50/70 p-4">
+      <div class="border-t border-gray-100 bg-gray-50/70 p-3 sm:p-4">
         @if (imgUrl) {
           <div
-            class="relative mb-3 h-24 w-24 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+            class="relative mb-3 h-20 w-20 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm sm:h-24 sm:w-24"
           >
             <img [src]="imgUrl" alt="Comment Photo" class="h-full w-full object-cover" />
 
@@ -901,15 +901,14 @@
           </div>
         }
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-end gap-2">
           <img
             [src]="userData.photo"
             [alt]="userData.name"
             class="h-9 w-9 shrink-0 rounded-full object-cover"
           />
-
           <div
-            class="flex flex-1 items-center rounded-2xl border border-gray-200 bg-white px-3 transition focus-within:border-main-color focus-within:ring-4 focus-within:ring-main-color/10"
+            class="flex min-w-0 flex-1 items-center rounded-2xl border border-gray-200 bg-white px-2 transition focus-within:border-main-color focus-within:ring-4 focus-within:ring-main-color/10 sm:px-3"
           >
             <input
               [formControl]="commentControl"
@@ -917,7 +916,6 @@
               placeholder="Write a comment..."
               class="min-w-0 flex-1 border-none bg-transparent px-2 py-2.5 text-sm text-gray-700 outline-none placeholder:text-gray-400 focus:ring-0"
             />
-
             <label
               for="comment-image"
               class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-gray-400 transition hover:bg-main-color/10 hover:text-main-color"
@@ -938,7 +936,7 @@
           <button
             (click)="submitComment()"
             type="button"
-            class="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-main-color text-white shadow-sm transition hover:bg-third-color hover:shadow-md active:scale-95"
+            class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-main-color text-white shadow-sm transition hover:bg-third-color hover:shadow-md active:scale-95 sm:h-11 sm:w-11"
             title="Send comment"
           >
             <i class="fa-solid fa-paper-plane text-sm"></i>
