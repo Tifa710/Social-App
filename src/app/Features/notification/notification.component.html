@@ -68,18 +68,10 @@
         <!-- Mark All -->
 
         <button
-          class="group flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-main-color"
+          (click)="markAllAsRead()"
+          class="group cursor-pointer flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-main-color"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            class="h-4 w-4 transition group-hover:scale-110"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-          </svg>
+          <i class="fa-solid fa-check-double" style="color: rgb(255, 255, 255)"></i>
 
           Mark all as read
         </button>

@@ -37,7 +37,7 @@ export class NotificationComponent implements OnInit {
   }
   makeNotificationRead(notificationId: string): void {
     this.notificationsService.markNotificationAsRead(notificationId).subscribe({
-      next: (res) => {
+      next: () => {
         const notification = this.notificationsArray.find(
           (notify) => notify._id === notificationId,
         );
@@ -45,6 +45,13 @@ export class NotificationComponent implements OnInit {
           notification.isRead = true;
         }
         this.notificationsService.Count.next();
+      },
+    });
+  }
+  markAllAsRead(): void {
+    this.notificationsService.markAllAsRead().subscribe({
+      next: () => {
+        this.notificationsArray.every((notify) => (notify.isRead = true));
       },
     });
   }
