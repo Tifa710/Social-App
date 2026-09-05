@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
   errMsg: string = '';
-  loading: boolean = false;
   registerForm!: FormGroup;
   registerSub$: Subscription = new Subscription();
 
@@ -62,7 +61,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.loading = true;
       this.registerSub$.unsubscribe();
       this.registerSub$ = this.authService.signUp(this.registerForm.value).subscribe({
         next: (res) => {
@@ -71,10 +69,6 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(['/login']);
             }, 1000);
           }
-        },
-
-        complete: () => {
-          this.loading = false;
         },
       });
     } else {

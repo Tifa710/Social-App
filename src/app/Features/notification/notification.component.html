@@ -5,20 +5,7 @@
         <div>
           <div class="mb-2 flex items-center gap-2">
             <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-main-color/10">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.8"
-                stroke="currentColor"
-                class="h-5 w-5 text-main-color"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022 23.848 23.848 0 0 0 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                />
-              </svg>
+              <i class="fa-regular fa-bell text-main-color"></i>
             </div>
 
             <span class="text-sm font-semibold text-main-color"> Activity Center </span>
@@ -30,9 +17,6 @@
 
           <p class="mt-2 text-sm text-gray-500">Keep up with the latest activity on your posts.</p>
         </div>
-
-        <!-- Unread Counter -->
-
         <div
           class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm"
         >
@@ -48,25 +32,7 @@
         </div>
       </div>
 
-      <div
-        class="mb-6 flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div class="flex w-full rounded-xl bg-gray-100 p-1 sm:w-auto">
-          <button
-            class="flex-1 rounded-lg bg-white px-6 py-2.5 text-sm font-bold text-main-color shadow-sm transition sm:flex-none"
-          >
-            All
-          </button>
-
-          <button
-            class="flex-1 rounded-lg px-6 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-white hover:text-gray-900 sm:flex-none"
-          >
-            Unread
-          </button>
-        </div>
-
-        <!-- Mark All -->
-
+      <div class="mb-6 flex flex-col gap-3 p-2 sm:flex-row sm:items-center sm:justify-end">
         <button
           (click)="markAllAsRead()"
           class="group cursor-pointer flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-main-color"
@@ -76,16 +42,7 @@
           Mark all as read
         </button>
       </div>
-
-      <!-- ========================================= -->
-      <!-- NOTIFICATIONS -->
-      <!-- ========================================= -->
-
       <div class="space-y-4">
-        <!-- ========================================= -->
-        <!-- LIKE - UNREAD -->
-        <!-- ========================================= -->
-
         @for (Notification of notificationsArray; track Notification._id) {
           @if (!Notification.isRead) {
             <div
