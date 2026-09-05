@@ -1,5 +1,10 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  ɵInternalFormsSharedModule,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { BookmarkPost } from '../../../../Core/Models/bookMark/bookmarksposts.interface';
 import { Reply } from '../../../../Core/Models/comments/commentreplay.interface';
@@ -8,12 +13,11 @@ import { Post, User } from '../../../../Core/Models/Posts/post-data.interface';
 import { CommentsService } from '../../../../Core/Services/comments.service';
 import { MyUserService } from '../../../../Core/Services/myuser.service';
 import { PostService } from '../../../../Core/Services/post.service';
-import { getUserData } from '../../../../Core/utilities/getUserData';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
 @Component({
   selector: 'app-feedcontent',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, TimeAgoPipe],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, TimeAgoPipe, FormsModule],
   templateUrl: './feedcontent.component.html',
   styleUrl: './feedcontent.component.css',
 })
@@ -41,6 +45,8 @@ export class FeedcontentComponent implements OnInit {
   isMyPostActive: boolean = false;
   isSavedPostActive: boolean = false;
   userData!: User;
+  reSharedData!: string;
+  selectedSharedPost!: string;
   ngOnInit(): void {
     this.getMyUserData();
     this.onFeedPost();
@@ -310,5 +316,27 @@ export class FeedcontentComponent implements OnInit {
   }
   createPostRemoveFile(): void {
     this.postImgUrl = '';
+  }
+  openSharedPostId(id: string): void {
+    this.selectedSharedPost = id;
+    console.log(this.selectedSharedPost);
+  }
+  reSharePost(): void {
+    this.postService.reSharePost(this.selectedSharedPost, this.reSharedData).subscribe({
+      next: () => {
+        const modal = document.getElementById('share-modal') as HTMLInputElement;
+        modal.checked = false;
+        this.reSharedData = '';
+        if (this.isCommunityPostActive) {
+          this.getAllPosts();
+        } else if (this.isFeedPostActive) {
+          this.onFeedPost();
+        } else if (this.isSavedPostActive) {
+          this.onGetMarkedPost();
+        } else if (this.isMyPostActive) {
+          this.onGetMYPost();
+        }
+      },
+    });
   }
 }

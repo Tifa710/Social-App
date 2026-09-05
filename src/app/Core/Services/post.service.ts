@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PostDataResponse } from '../Models/Posts/post-data.interface';
-import { PostMutation, PostMutationResponse } from '../Models/Posts/post-mutation.interface';
 import { likePostResponse } from '../Models/Posts/likepost.interface';
+import { PostDataResponse } from '../Models/Posts/post-data.interface';
+import { PostMutationResponse } from '../Models/Posts/post-mutation.interface';
 import { BookMarkedPostResponse } from '../Models/bookMark/bookmarkedpost.interface';
 import { BookMarksPostsResponse } from '../Models/bookMark/bookmarksposts.interface';
 
@@ -31,8 +31,14 @@ export class PostService {
   createPost(data: object): Observable<PostMutationResponse> {
     return this.httpClient.post<PostMutationResponse>(`${environment.base_url}/posts/`, data);
   }
-  updatePost(postId: string): Observable<any> {
-    return this.httpClient.put(`${environment.base_url}/posts/${postId}`, {});
+  reSharePost(postId: string, body: string): Observable<PostMutationResponse> {
+    return this.httpClient.post<PostMutationResponse>(
+      `${environment.base_url}/posts/${postId}/share`,
+      body,
+    );
+  }
+  updatePost(postId: string, body: string): Observable<any> {
+    return this.httpClient.put(`${environment.base_url}/posts/${postId}`, body);
   }
   deletePost(postId: string): Observable<PostMutationResponse> {
     return this.httpClient.delete<PostMutationResponse>(`${environment.base_url}/posts/${postId}`);
